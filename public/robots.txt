@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://buyersbulletin.com/sitemap.xml
+Sitemap: https://theshoppinghabit.com/sitemap.xml

@@ -49,8 +49,8 @@ const contactDetails = [
   {
     icon: Mail,
     label: "Email",
-    value: "info@buyersbulletin.com",
-    href: "mailto:info@buyersbulletin.com",
+    value: "info@theshoppinghabit.com",
+    href: "mailto:info@theshoppinghabit.com",
   },
   {
     icon: Clock,
@@ -171,7 +171,7 @@ function ContactPage() {
                 </h2>
               </div>
               <a
-                href="mailto:info@buyersbulletin.com"
+                href="mailto:info@theshoppinghabit.com"
                 className="inline-flex items-center gap-2 bg-cream text-ink rounded-sm px-5 py-3 text-[11px] sm:text-xs font-bold uppercase tracking-widest hover:scale-[1.03] transition-transform shrink-0 self-start md:self-auto"
               >
                 Email us <ArrowUpRight className="size-3.5" />

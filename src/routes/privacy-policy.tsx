@@ -211,8 +211,8 @@ function PrivacyPolicyPage() {
             </h2>
             <p className="text-sm sm:text-base text-foreground/80 leading-relaxed max-w-2xl text-pretty">
               If you have any questions regarding this Privacy Policy, feel free to contact us at{" "}
-              <a href="mailto:info@buyersbulletin.com" className="underline underline-offset-4 hover:opacity-60 transition-opacity">
-                info@buyersbulletin.com
+              <a href="mailto:info@theshoppinghabit.com" className="underline underline-offset-4 hover:opacity-60 transition-opacity">
+                info@theshoppinghabit.com
               </a>
               .
             </p>

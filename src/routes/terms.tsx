@@ -221,10 +221,10 @@ function TermsPage() {
             <p className="text-sm sm:text-base text-foreground/80 leading-relaxed max-w-2xl text-pretty">
               If you have any questions regarding these Terms & Conditions, please contact us at{" "}
               <a
-                href="mailto:info@buyersbulletin.com"
+                href="mailto:info@theshoppinghabit.com"
                 className="underline underline-offset-4 hover:opacity-60 transition-opacity"
               >
-                info@buyersbulletin.com
+                info@theshoppinghabit.com
               </a>
               .
             </p>

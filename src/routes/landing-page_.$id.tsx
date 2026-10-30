@@ -105,7 +105,7 @@ type Coupon = {
 
 const DAY = 24 * 60 * 60 * 1000;
 const now = Date.now();
-const MERCHANT_URL = "https://collarsandco.com";
+const MERCHANT_URL = "https://theshoppinghabit.com";
 
 // Google Ads "Outbound click" conversion — only fires here, since this is
 // the only page with buy/get-code buttons. Not loaded globally in index.html.
