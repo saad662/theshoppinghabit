@@ -454,11 +454,7 @@ function LandingPage() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 lg:gap-10">
           {/* Deal grid */}
           <div>
-            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-1">{pageTitle}</h1>
-            <p className="text-sm text-muted-foreground mb-6 max-w-2xl">
-              {store?.description ??
-                `Save more at ${storeName}. Every code is hand-verified by our team within the last 24 hours.`}
-            </p>
+            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-6">{pageTitle}</h1>
 
             {loading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -492,12 +488,9 @@ function LandingPage() {
               ) : (
                 <p className="text-lg font-bold tracking-tight mb-4">{storeName}</p>
               )}
-              <h2 className="text-sm font-bold uppercase tracking-widest mb-2">
+              <h2 className="text-sm font-bold uppercase tracking-widest">
                 {storeName} Coupons & Promo Codes
               </h2>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                {store?.description ?? `${storeName} offers quality products with the best discounts and special offers available on our site.`}
-              </p>
             </div>
 
             <div className="rounded-sm border border-foreground/10 overflow-hidden">
