@@ -2,9 +2,10 @@ import { createFileRoute, Link , useParams } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { useRef } from "react";
 import { toast } from "sonner";
-import { MobileMenuLegacy as MobileMenu } from "@/components/MobileMenuLegacy";
+import { MobileMenu } from "@/components/MobileMenu";
 import { NavSearch } from "@/components/NavSearch";
-import { FooterLegacy as Footer } from "@/components/FooterLegacy";
+import { Footer } from "@/components/Footer";
+import { Logo } from "@/components/Logo";
 import { absoluteUrl, breadcrumbLd, DEFAULT_OG_IMAGE, SITE_NAME, truncate } from "@/lib/seo";
 
 export const Route = createFileRoute("/landing-page_/$id")({
@@ -213,19 +214,11 @@ function tagStyle(tag: Tag) {
   }
 }
 
-function CouponCard({
-  coupon,
-}: {
-  coupon: Coupon;
-}) {
-  const [revealed, setRevealed] = useState(false);
-  const isExpiringSoon = coupon.expiresAt - now < 2 * DAY;
-
+function CouponCard({ coupon }: { coupon: Coupon }) {
   const handleClick = () => {
     if (coupon.hasCode && coupon.code) {
       navigator.clipboard?.writeText(coupon.code).catch(() => {});
       toast.success("Code copied to clipboard", { description: coupon.code });
-      setRevealed(true);
     } else {
       toast.success("Opening deal…");
     }
@@ -233,163 +226,41 @@ function CouponCard({
     window.open(coupon.url, "_blank", "noopener,noreferrer");
   };
 
+  const highlight =
+    coupon.discount !== "CODE" && coupon.discount !== "DEAL"
+      ? coupon.discount
+      : coupon.title.split(" ").slice(0, 2).join(" ");
+
   return (
-    <article className="coupon-card group relative flex flex-col sm:flex-row gap-4 sm:gap-6 items-stretch rounded-2xl border border-foreground/10 bg-background p-4 sm:p-5 shadow-sm overflow-hidden">
-      <div className="coupon-notch sm:w-32 shrink-0 flex sm:flex-col items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-brand/15 to-pop/15 ring-1 ring-brand/25 p-4 text-center transition-transform duration-500 group-hover:scale-[1.04] group-hover:rotate-[-2deg]">
-        <span className="text-2xl sm:text-3xl font-extrabold tracking-tight text-brand">
-          Deal
-        </span>
-        <span className="text-[10px] font-semibold uppercase tracking-widest text-ink/70">
-          {coupon.type === "code" ? "Promo Code" : "Deal"}
+    <article className="group flex rounded-sm border border-foreground/10 bg-background overflow-hidden hover:border-brand/40 transition-colors">
+      <div className="w-24 sm:w-28 shrink-0 bg-brand-soft flex items-center justify-center p-2 text-center">
+        <span className="text-base sm:text-lg font-bold tracking-tight text-brand leading-tight">
+          {highlight}
         </span>
       </div>
-
-      <div className="flex-1 min-w-0 flex flex-col gap-2">
-        <div className="flex flex-wrap items-center gap-1.5">
-          {coupon.verified && (
-            <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-brand">
-              <svg viewBox="0 0 20 20" fill="currentColor" className="size-3.5">
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 10-1.4 1.4l2 2a1 1 0 001.4 0l4-4z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              Verified
-            </span>
-          )}
-          {coupon.tags.map((t) => (
-            <span
-              key={t}
-              className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${tagStyle(t)}`}
-            >
-              {t}
-            </span>
-          ))}
-        </div>
-        <h3 className="text-base sm:text-lg font-semibold leading-snug text-foreground">{coupon.title}</h3>
-        {coupon.description && (
-          <p className="text-sm text-muted-foreground line-clamp-2">{coupon.description}</p>
-        )}
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-muted-foreground mt-1">
-          <span className="inline-flex items-center gap-1">
-            <span className="size-1.5 rounded-full bg-mint" />
-            {coupon.uses.toLocaleString()} used
+      <div className="flex-1 min-w-0 p-3 sm:p-4 flex flex-col gap-1.5">
+        <div className="flex items-center justify-between gap-2">
+          <span className="inline-flex items-center gap-1 bg-ink text-cream rounded-sm px-2 py-0.5 text-[9px] font-bold uppercase tracking-widest">
+            {coupon.hasCode ? "Code" : "Deal"}
           </span>
-          {isExpiringSoon && (
-            <span className="inline-flex items-center gap-1 text-brand font-semibold">
-              Ends in <Countdown target={coupon.expiresAt} compact />
-            </span>
+          {coupon.verified && (
+            <span className="text-[9px] font-bold uppercase tracking-widest text-mint">✓ Verified</span>
           )}
         </div>
-      </div>
-
-      <div className="sm:w-36 flex sm:flex-col items-center justify-center">
-        <button
-          onClick={handleClick}
-          aria-label={coupon.hasCode ? "Get code" : "Get deal"}
-          className="ticket-btn group/tk relative inline-flex items-center gap-2 rounded-full bg-ink text-cream pl-3 pr-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] shadow-[0_8px_20px_-10px_oklch(0.16_0.02_60/.6)] transition-all duration-300 hover:-translate-y-0.5 active:scale-95"
-        >
-          <span className="ticket-dot" aria-hidden />
-          <span className="relative z-10">{coupon.hasCode ? "Get Code" : "Get Deal"}</span>
-          <span aria-hidden className="relative z-10 inline-block transition-transform duration-300 group-hover/tk:translate-x-0.5">→</span>
-          {/* Blurred code chip that slides out on hover */}
-          {coupon.hasCode && (
-            <span
-              aria-hidden
-              className="ticket-chip pointer-events-none absolute left-1/2 top-full mt-1.5 -translate-x-1/2 translate-y-1 opacity-0 rotate-[-4deg] rounded-md bg-[var(--gradient-shop)] text-ink font-mono text-[10px] font-extrabold tracking-[0.3em] px-2.5 py-1 shadow-md transition-all duration-300 ease-out group-hover/tk:opacity-100 group-hover/tk:translate-y-0 group-hover/tk:rotate-[-2deg] uppercase"
-            >
-              <span className="blur-[2.5px] select-none">{coupon.code}</span>
-            </span>
-          )}
-        </button>
+        <h3 className="text-sm font-semibold leading-snug line-clamp-2">{coupon.title}</h3>
+        <div className="mt-auto flex items-center justify-between gap-2 pt-1">
+          <span className="text-[10px] text-muted-foreground">
+            Exp. {new Date(coupon.expiresAt).toISOString().slice(0, 10)}
+          </span>
+          <button
+            onClick={handleClick}
+            className="text-[10px] font-bold uppercase tracking-widest text-brand hover:underline shrink-0"
+          >
+            {coupon.hasCode ? "Get Code" : "Details"} +
+          </button>
+        </div>
       </div>
     </article>
-  );
-}
-
-function BestDealCard({
-  title,
-  description,
-  code,
-  hasCode,
-  discount,
-  onGrab,
-}: {
-  title: string;
-  description: string;
-  code?: string;
-  hasCode: boolean;
-  discount: string;
-  onGrab: () => void;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const el = ref.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    const x = e.clientX - r.left;
-    const y = e.clientY - r.top;
-    const rx = ((y / r.height) - 0.5) * -10;
-    const ry = ((x / r.width) - 0.5) * 12;
-    el.style.setProperty("--rx", `${rx}deg`);
-    el.style.setProperty("--ry", `${ry}deg`);
-    el.style.setProperty("--mx", `${(x / r.width) * 100}%`);
-    el.style.setProperty("--my", `${(y / r.height) * 100}%`);
-  };
-  const onLeave = () => {
-    const el = ref.current;
-    if (!el) return;
-    el.style.setProperty("--rx", `0deg`);
-    el.style.setProperty("--ry", `0deg`);
-  };
-
-  return (
-    <div
-      ref={ref}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-      className="tilt-card group relative rounded-3xl bg-ink text-cream p-6 sm:p-8 shadow-[var(--shadow-pop)] overflow-hidden will-change-transform"
-    >
-      <div className="absolute -top-10 -right-10 size-40 bg-brand/40 rounded-full blur-2xl animate-blob transition-transform duration-700 ease-out group-hover:scale-150 group-hover:-translate-x-8 group-hover:translate-y-6" aria-hidden />
-      <div className="absolute -bottom-16 -left-10 size-48 bg-pop/30 rounded-full blur-3xl animate-blob transition-transform duration-700 ease-out group-hover:scale-150 group-hover:translate-x-10 group-hover:-translate-y-8" aria-hidden />
-      <span className="tilt-glow" aria-hidden />
-
-      <div className="relative" style={{ transform: "translateZ(40px)" }}>
-        <span className="inline-flex items-center gap-2 bg-pop text-pop-foreground rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-widest">
-          <span className="size-1.5 rounded-full bg-ink animate-pulse" />
-          Best Deal Today
-        </span>
-        <div className="mt-5 flex items-end gap-3">
-          <span className="relative text-6xl sm:text-7xl font-extrabold leading-none bg-gradient-to-br from-cream via-pop to-brand bg-clip-text text-transparent drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
-            {discount}
-          </span>
-        </div>
-        <p className="mt-3 text-lg font-semibold">{title}</p>
-        {description && <p className="text-sm opacity-90 mt-1">{description}</p>}
-        <div className="mt-4 inline-flex items-center gap-2 text-xs font-semibold bg-white/15 backdrop-blur rounded-full px-3 py-1.5 ring-1 ring-white/20">
-          ⏳ Ends in <RollingCountdown periodMs={7 * DAY} compact />
-        </div>
-
-        <button
-          onClick={onGrab}
-          className="ticket-btn group/tk mt-8 sm:mt-10 inline-flex items-center gap-2 rounded-full bg-cream text-ink px-4 py-2.5 text-xs font-bold uppercase tracking-[0.18em] shadow-lg transition-all duration-300 hover:-translate-y-0.5 active:scale-95"
-        >
-          <span className="ticket-dot" aria-hidden />
-          <span className="relative z-10">{hasCode ? "Get Code" : "Get Deal"}</span>
-          <span aria-hidden className="relative z-10 inline-block transition-transform duration-300 group-hover/tk:translate-x-0.5">→</span>
-          {hasCode && (
-            <span
-              aria-hidden
-              className="ticket-chip pointer-events-none absolute left-1/2 top-full mt-1.5 -translate-x-1/2 translate-y-1 opacity-0 rotate-[-4deg] rounded-md bg-[var(--gradient-shop)] text-ink font-mono text-[10px] font-extrabold tracking-[0.3em] px-2.5 py-1 shadow-md transition-all duration-300 ease-out group-hover/tk:opacity-100 group-hover/tk:translate-y-0 group-hover/tk:rotate-[-2deg] uppercase"
-            >
-              <span className="blur-[2.5px] select-none">{code}</span>
-            </span>
-          )}
-        </button>
-      </div>
-    </div>
   );
 }
 
@@ -508,52 +379,59 @@ function LandingPage() {
     window.open(bestDeal.url, "_blank", "noopener,noreferrer");
   };
 
+  const [filterTab, setFilterTab] = useState<"all" | "codes" | "deals" | "verified">("all");
+  const codesCount = sorted.filter((c) => c.hasCode).length;
+  const dealsCount = sorted.filter((c) => !c.hasCode).length;
+  const verifiedCount = sorted.filter((c) => c.verified).length;
+  const visibleCoupons = sorted.filter((c) => {
+    if (filterTab === "codes") return c.hasCode;
+    if (filterTab === "deals") return !c.hasCode;
+    if (filterTab === "verified") return c.verified;
+    return true;
+  });
+
+  const filterTabs = [
+    { key: "all" as const, label: "All", count: sorted.length },
+    { key: "codes" as const, label: "Codes", count: codesCount },
+    { key: "deals" as const, label: "Deals", count: dealsCount },
+    { key: "verified" as const, label: "Verified", count: verifiedCount },
+  ];
+
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterDone, setNewsletterDone] = useState(false);
+
   return (
-    <div className="legacy-coupon-palette min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Navbar */}
-      <nav className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-foreground/5 py-2 sm:py-3 px-4 sm:px-6 lg:px-8 flex justify-between items-center gap-3 overflow-visible">
+      <nav className="sticky top-0 z-40 bg-background border-b-2 border-brand py-3 sm:py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center gap-3 overflow-visible">
         <Link to="/" className="flex items-center shrink-0">
-          <img
-            src="/logo.png"
-            alt="Buyers Bulletin"
-            width={220}
-            height={74}
-            className="w-[220px] h-auto object-contain block"
-          />
+          <Logo />
         </Link>
         <div className="hidden md:flex gap-8">
           <Link
             to="/"
             activeOptions={{ exact: true }}
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
+            className="text-xs font-bold uppercase tracking-widest transition-colors relative pb-1"
+            activeProps={{ className: "text-foreground after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-[2px] after:bg-brand" }}
+            inactiveProps={{ className: "text-foreground/50 hover:text-foreground" }}
           >
             Home
           </Link>
           <Link
             to="/blog"
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
+            className="text-xs font-bold uppercase tracking-widest transition-colors relative pb-1"
+            activeProps={{ className: "text-foreground after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-[2px] after:bg-brand" }}
+            inactiveProps={{ className: "text-foreground/50 hover:text-foreground" }}
           >
             Blogs
           </Link>
           <Link
             to="/products"
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
+            className="text-xs font-bold uppercase tracking-widest transition-colors relative pb-1"
+            activeProps={{ className: "text-foreground after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-[2px] after:bg-brand" }}
+            inactiveProps={{ className: "text-foreground/50 hover:text-foreground" }}
           >
             Shop
-          </Link>
-          <Link
-            to="/stores"
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
-          >
-            Stores
           </Link>
         </div>
         <div className="flex items-center gap-2">
@@ -562,235 +440,169 @@ function LandingPage() {
         <MobileMenu />
       </nav>
 
-      {/* Hero */}
-      <header className="relative overflow-hidden border-b border-foreground/5">
-        <div className="absolute inset-0 bg-[var(--gradient-cream)] opacity-80" aria-hidden />
-        <div
-          className="absolute -top-32 -right-40 size-[420px] bg-brand/25 blur-3xl rounded-full animate-blob"
-          aria-hidden
-        />
-        <div
-          className="absolute -bottom-32 -left-40 size-[420px] bg-pop/25 blur-3xl rounded-full animate-blob"
-          aria-hidden
-        />
-        <div className="relative max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
-          <div className="grid lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-7">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground mb-5">
-  
-  <Link
-    to="/"
-    className="hover:text-foreground transition-colors"
-  >
-    Home
-  </Link>
+      {/* Breadcrumb */}
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 pb-2 flex items-center gap-2 text-xs text-muted-foreground">
+        <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
+        <span>→</span>
+        <Link to="/stores" className="hover:text-foreground transition-colors">Stores</Link>
+        <span>→</span>
+        <span className="text-foreground font-medium">{storeName}</span>
+      </div>
 
-  <span>→</span>
+      {/* Main: deal grid + sidebar */}
+      <section className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 lg:gap-10">
+          {/* Deal grid */}
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-1">{pageTitle}</h1>
+            <p className="text-sm text-muted-foreground mb-6 max-w-2xl">
+              {store?.description ??
+                `Save more at ${storeName}. Every code is hand-verified by our team within the last 24 hours.`}
+            </p>
 
-  <Link
-    to="/stores"
-    className="hover:text-foreground transition-colors"
-  >
-    Stores
-  </Link>
-
-  <span>→</span>
-
-  <span className="text-foreground font-medium">
-    Landing Page
-  </span>
-</div>
-              <span className="inline-flex items-center gap-2 rounded-full bg-mint/25 text-ink px-3 py-1 text-[11px] font-bold uppercase tracking-widest">
-                <span className="size-1.5 rounded-full bg-brand animate-pulse" />
-                Verified & Updated Offers
-              </span>
-              <h1 className="mt-4 text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05] text-balance">
-                {pageTitle}
-              </h1>
-              <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-xl">
-                {store?.description ??
-                  `Save more at ${storeName}. Every code is hand-verified by our team within the last 24 hours.`}
-              </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <a
-                  href="#coupons"
-                  className="inline-flex items-center gap-2 bg-ink text-cream rounded-full px-5 sm:px-6 py-3 text-sm font-bold uppercase tracking-widest shadow-[var(--shadow-pop)] transition-all hover:scale-[1.04]"
-                >
-                  See all coupons →
-                </a>
-                <a
-                  href="#how-to-use"
-                  className="inline-flex items-center gap-2 bg-background border border-foreground/15 hover:border-foreground/40 rounded-full px-5 sm:px-6 py-3 text-sm font-semibold transition-colors"
-                >
-                  How it works
-                </a>
+            {loading ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} className="h-28 rounded-sm border border-foreground/10 bg-foreground/5 animate-pulse" />
+                ))}
               </div>
-            </div>
+            ) : visibleCoupons.length > 0 ? (
+              <div id="coupons" className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {visibleCoupons.map((c) => (
+                  <CouponCard key={c.id} coupon={c} />
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground py-12 text-center border border-dashed border-foreground/15 rounded-sm">
+                No {filterTab === "all" ? "" : filterTab + " "}offers for {storeName} right now — check back soon.
+              </p>
+            )}
+          </div>
 
-            {/* Best deal card */}
-            <div className="lg:col-span-5 lg:sticky lg:top-24">
-              {loading ? (
-                <div className="rounded-3xl bg-ink/90 text-cream p-6 sm:p-8 animate-pulse">
-                  <div className="h-5 w-28 rounded-full bg-cream/20" />
-                  <div className="h-16 w-40 rounded-lg bg-cream/20 mt-5" />
-                  <div className="h-4 w-3/4 rounded bg-cream/20 mt-4" />
-                  <div className="h-10 w-32 rounded-full bg-cream/20 mt-8" />
-                </div>
-              ) : bestDeal ? (
-                <BestDealCard
-                  title={bestDeal.title}
-                  description={bestDeal.description}
-                  code={bestDeal.code}
-                  hasCode={bestDeal.hasCode}
-                  discount={bestDeal.discount}
-                  onGrab={grabBestDeal}
+          {/* Sidebar */}
+          <aside className="space-y-5 lg:sticky lg:top-24 self-start">
+            <div className="rounded-sm border border-foreground/10 bg-background p-5 text-center">
+              {store?.logo_url ? (
+                <img
+                  src={store.logo_url}
+                  alt={`${storeName} logo`}
+                  className="h-12 mx-auto object-contain mb-4"
+                  loading="lazy"
                 />
               ) : (
-                <div className="rounded-3xl bg-ink text-cream p-6 sm:p-8 text-center">
-                  <p className="text-sm opacity-90">No active deals right now — check back soon.</p>
-                </div>
+                <p className="text-lg font-bold tracking-tight mb-4">{storeName}</p>
               )}
-
-              {/* Store logo/picture, from the store API */}
-              {loading ? (
-                <div className="mt-4 h-20 rounded-xl bg-foreground/5 animate-pulse" />
-              ) : store?.logo_url ? (
-                <div className="mt-4 rounded-xl border border-foreground/10 bg-background p-4 flex items-center gap-4">
-                  <img
-                    src={store.logo_url}
-                    alt={`${storeName} logo`}
-                    className="size-16 sm:size-20 rounded-lg object-contain bg-white ring-1 ring-foreground/5 p-2 shrink-0"
-                    loading="lazy"
-                  />
-                  <p className="text-base font-semibold text-foreground truncate">{storeName}</p>
-                </div>
-              ) : null}
-
-              {/* Affiliate disclosure — required on every store page, independent of
-                  whether the logo loaded, per Google Ads policy compliance. */}
-              <p className="mt-4 text-xs text-muted-foreground text-center sm:text-left">
-                We are affiliate partners with {storeName} and may earn a commission from
-                purchases made through links on this page.
+              <h2 className="text-sm font-bold uppercase tracking-widest mb-2">
+                {storeName} Coupons & Promo Codes
+              </h2>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                {store?.description ?? `${storeName} offers quality products with the best discounts and special offers available on our site.`}
               </p>
             </div>
-          </div>
-        </div>
-      </header>
 
-      {/* Coupons */}
-      <section id="coupons" className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-        <div className="mb-6 sm:mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">All coupons & deals</h2>
-          <p className="text-sm text-muted-foreground mt-1">
-            {loading ? "Loading offers…" : `${sorted.length} active offer${sorted.length === 1 ? "" : "s"} ready to use`}
-          </p>
-        </div>
+            <div className="rounded-sm border border-foreground/10 overflow-hidden">
+              {filterTabs.map((t) => {
+                const active = filterTab === t.key;
+                return (
+                  <button
+                    key={t.key}
+                    onClick={() => setFilterTab(t.key)}
+                    className={`w-full flex items-center justify-between px-4 py-2.5 text-sm border-b border-foreground/10 last:border-b-0 transition-colors ${
+                      active ? "bg-ink text-cream font-semibold" : "text-foreground/70 hover:bg-foreground/5"
+                    }`}
+                  >
+                    <span>{active ? "✓ " : ""}{t.label}</span>
+                    <span className={active ? "text-cream/60" : "text-muted-foreground"}>({t.count})</span>
+                  </button>
+                );
+              })}
+            </div>
 
-        <div className="grid grid-cols-1 gap-4">
-          {loading ? (
-            Array.from({ length: 3 }).map((_, i) => (
-              <div
-                key={i}
-                className="h-28 rounded-2xl border border-foreground/10 bg-foreground/5 animate-pulse"
-              />
-            ))
-          ) : sorted.length > 0 ? (
-            sorted.map((c) => <CouponCard key={c.id} coupon={c} />)
+            <div className="rounded-sm border border-foreground/10 bg-background p-5">
+              <p className="text-xs font-bold uppercase tracking-widest text-brand mb-2">
+                About {storeName}
+              </p>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                {store?.description ??
+                  `${storeName} offers a range of products designed to suit different needs. Visit ${merchantDomain} to find the best discounts and special offers on selected products.`}
+              </p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      {/* Newsletter */}
+      <section className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 sm:pb-14">
+        <div className="rounded-sm border border-foreground/10 bg-brand-soft p-6 sm:p-8">
+          <h2 className="text-lg sm:text-xl font-semibold tracking-tight mb-4">
+            Sign up today for free {storeName} coupons and promo codes
+          </h2>
+          {newsletterDone ? (
+            <p className="text-sm font-semibold text-brand">Subscribed — check your inbox.</p>
           ) : (
-            <p className="text-sm text-muted-foreground py-8 text-center">
-              No active coupons for {storeName} right now — check back soon.
-            </p>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setNewsletterDone(true);
+              }}
+              className="flex flex-col sm:flex-row gap-2 max-w-xl"
+            >
+              <input
+                type="email"
+                required
+                value={newsletterEmail}
+                onChange={(e) => setNewsletterEmail(e.target.value)}
+                placeholder="Your email"
+                className="flex-1 rounded-sm border border-foreground/15 bg-background px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40"
+              />
+              <button
+                type="submit"
+                className="rounded-sm bg-ink text-cream px-5 py-2.5 text-xs font-bold uppercase tracking-widest hover:brightness-110 transition-[filter]"
+              >
+                Subscribe
+              </button>
+            </form>
           )}
         </div>
       </section>
 
-      {/* How to use */}
-      <section id="how-to-use" className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
-        <div className="text-center max-w-xl mx-auto mb-10">
-          <span className="text-[11px] font-bold uppercase tracking-widest text-brand">3 simple steps</span>
-          <h2 className="text-2xl sm:text-4xl font-bold tracking-tight mt-2">How to use a coupon</h2>
-        </div>
-        <div className="grid sm:grid-cols-3 gap-4 sm:gap-6">
-          {[
-            {
-              icon: "🏷️",
-              t: "Pick a coupon",
-              d: "Browse verified offers and choose the discount that fits your order.",
-            },
-            {
-              icon: "📋",
-              t: "Copy the code",
-              d: "Tap Get Code to reveal and auto-copy it to your clipboard.",
-            },
-            {
-              icon: "🛍️",
-              t: "Apply at checkout",
-              d: `Paste the code on ${merchantDomain} to apply your savings instantly.`,
-            },
-          ].map((s, i) => (
-            <div
-              key={s.t}
-              className="relative rounded-2xl bg-background border border-foreground/10 p-6 shadow-sm hover:shadow-md transition-shadow"
-            >
-              <div className="absolute -top-3 -left-3 size-8 rounded-full bg-brand text-brand-foreground grid place-items-center text-xs font-bold animate-wiggle">
-                {i + 1}
-              </div>
-              <div className="text-3xl mb-3">{s.icon}</div>
-              <h3 className="font-semibold text-lg">{s.t}</h3>
-              <p className="text-sm text-muted-foreground mt-1">{s.d}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* FAQ */}
-
       {store?.questions?.length > 0 && (
-  <section className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
-    <div className="max-w-4xl mx-auto">
-      <div className="text-center mb-10">
-        <span className="text-[11px] font-bold uppercase tracking-widest text-brand">
-          FAQs
-        </span>
-
-        <h2 className="text-3xl sm:text-4xl font-bold mt-2">
-          Frequently Asked Questions
-        </h2>
-
-        <p className="text-muted-foreground mt-3">
-          Find answers to the most common questions about {store?.name}.
-        </p>
-      </div>
-
-      <div className="space-y-4">
-        {store.questions.map((question: string, index: number) => (
-          <details
-            key={index}
-            className="group rounded-2xl border border-foreground/10 bg-background p-5 shadow-sm"
-          >
-            <summary className="flex cursor-pointer list-none items-center justify-between font-semibold text-lg">
-              {question}
-
-              <span className="transition-transform duration-300 group-open:rotate-180">
-                ▼
-              </span>
-            </summary>
-
-            <div className="mt-4 border-t pt-4 text-muted-foreground leading-7">
-              {store.answers?.[index]}
+        <section className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 sm:pb-20">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-10">
+              <span className="text-[11px] font-bold uppercase tracking-widest text-brand">FAQs</span>
+              <h2 className="text-3xl sm:text-4xl font-bold mt-2">Frequently Asked Questions</h2>
+              <p className="text-muted-foreground mt-3">
+                Find answers to the most common questions about {store?.name}.
+              </p>
             </div>
-          </details>
-        ))}
-      </div>
-    </div>
-  </section>
-)}
+            <div className="space-y-4">
+              {store.questions.map((question: string, index: number) => (
+                <details
+                  key={index}
+                  className="group rounded-sm border border-foreground/10 bg-background p-5"
+                >
+                  <summary className="flex cursor-pointer list-none items-center justify-between font-semibold text-lg">
+                    {question}
+                    <span className="transition-transform duration-300 group-open:rotate-180">▼</span>
+                  </summary>
+                  <div className="mt-4 border-t pt-4 text-muted-foreground leading-7">
+                    {store.answers?.[index]}
+                  </div>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       <Footer showNewsletter />
 
       {/* Floating mobile CTA */}
       <a
         href="#coupons"
-        className="md:hidden fixed bottom-4 inset-x-4 z-40 inline-flex items-center justify-center gap-2 rounded-full bg-ink text-cream font-bold py-3.5 text-sm uppercase tracking-widest shadow-[var(--shadow-pop)]"
+        className="md:hidden fixed bottom-4 inset-x-4 z-40 inline-flex items-center justify-center gap-2 rounded-sm bg-ink text-cream font-bold py-3.5 text-sm uppercase tracking-widest shadow-lg"
       >
         🎟️ Grab a coupon
       </a>
