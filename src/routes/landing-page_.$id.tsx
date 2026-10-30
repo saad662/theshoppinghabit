@@ -545,22 +545,38 @@ function LandingPage() {
                 e.preventDefault();
                 setNewsletterDone(true);
               }}
-              className="flex flex-col sm:flex-row gap-2 max-w-xl"
+              className="max-w-xl"
             >
-              <input
-                type="email"
-                required
-                value={newsletterEmail}
-                onChange={(e) => setNewsletterEmail(e.target.value)}
-                placeholder="Your email"
-                className="flex-1 rounded-sm border border-foreground/15 bg-background px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40"
-              />
-              <button
-                type="submit"
-                className="rounded-sm bg-ink text-cream px-5 py-2.5 text-xs font-bold uppercase tracking-widest hover:brightness-110 transition-[filter]"
-              >
-                Subscribe
-              </button>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <input
+                  type="email"
+                  required
+                  value={newsletterEmail}
+                  onChange={(e) => setNewsletterEmail(e.target.value)}
+                  placeholder="Your email"
+                  className="flex-1 rounded-sm border border-foreground/15 bg-background px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40"
+                />
+                <button
+                  type="submit"
+                  className="rounded-sm bg-ink text-cream px-5 py-2.5 text-xs font-bold uppercase tracking-widest hover:brightness-110 transition-[filter]"
+                >
+                  Subscribe
+                </button>
+              </div>
+
+              <label className="mt-3 flex items-start gap-2 text-xs text-foreground/80">
+                <input type="checkbox" required className="mt-0.5 size-3.5 accent-brand" />
+                <span>I consent to receiving marketing emails from TheShoppingHabit</span>
+              </label>
+
+              <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
+                Subscribe to TheShoppingHabit's Newsletter for personalized offers based on your
+                shopping preferences on our website as described in the{" "}
+                <Link to="/privacy-policy" className="underline underline-offset-2 hover:text-foreground">
+                  Privacy Policy
+                </Link>
+                . You can unsubscribe at any time.
+              </p>
             </form>
           )}
         </div>
