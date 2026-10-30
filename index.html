@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/jpeg" href="/favicon.jpeg" />
+    <!--
+      These data-default tags are the pre-hydration fallback: what a
+      non-JS crawler/social bot sees, and what shows for the instant
+      before React mounts. Once TanStack Router's <HeadContent /> takes
+      over, __root.tsx removes every data-default tag so the real
+      per-route title/meta never ends up duplicated alongside these.
+    -->
+    <title data-default="true">TheShoppingHabit — Product Reviews & Buying Guides</title>
+    <meta data-default="true" name="description" content="Trusted product reviews, buying guides, comparisons, and the latest deals on tech, home, fashion, fitness, and more." />
+    <meta data-default="true" property="og:title" content="TheShoppingHabit — Product Reviews & Buying Guides" />
+    <meta data-default="true" property="og:description" content="Trusted product reviews, buying guides, comparisons, and the latest deals on tech, home, fashion, fitness, and more." />
+    <meta data-default="true" property="og:image" content="https://theshoppinghabit.com/logo.png" />
+    <meta data-default="true" property="og:url" content="https://theshoppinghabit.com/" />
+    <meta data-default="true" property="og:type" content="website" />
+    <meta data-default="true" name="twitter:card" content="summary_large_image" />
+    <meta data-default="true" name="twitter:title" content="TheShoppingHabit — Product Reviews & Buying Guides" />
+    <meta data-default="true" name="twitter:description" content="Trusted product reviews, buying guides, comparisons, and the latest deals on tech, home, fashion, fitness, and more." />
+    <meta data-default="true" name="twitter:image" content="https://theshoppinghabit.com/logo.png" />
+    <!--
+      No Google Tag Manager / GA4 / Google Ads / Search Console tags yet —
+      those belong to the new TheShoppingHabit Google account, which
+      doesn't exist yet. Add them here once it's set up.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
