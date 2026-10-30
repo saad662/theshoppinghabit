@@ -232,7 +232,18 @@ function CouponCard({ coupon }: { coupon: Coupon }) {
       : coupon.title.split(" ").slice(0, 2).join(" ");
 
   return (
-    <article className="group flex rounded-sm border border-foreground/10 bg-background overflow-hidden hover:border-brand/40 transition-colors">
+    <article
+      onClick={handleClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          handleClick();
+        }
+      }}
+      className="group flex rounded-sm border border-foreground/10 bg-background overflow-hidden hover:border-brand/40 transition-colors cursor-pointer"
+    >
       <div className="w-24 sm:w-28 shrink-0 bg-brand-soft flex items-center justify-center p-2 text-center">
         <span className="text-base sm:text-lg font-bold tracking-tight text-brand leading-tight">
           {highlight}
@@ -252,12 +263,9 @@ function CouponCard({ coupon }: { coupon: Coupon }) {
           <span className="text-[10px] text-muted-foreground">
             Exp. {new Date(coupon.expiresAt).toISOString().slice(0, 10)}
           </span>
-          <button
-            onClick={handleClick}
-            className="text-[10px] font-bold uppercase tracking-widest text-brand hover:underline shrink-0"
-          >
+          <span className="text-[10px] font-bold uppercase tracking-widest text-brand group-hover:underline shrink-0">
             {coupon.hasCode ? "Get Code" : "Details"} +
-          </button>
+          </span>
         </div>
       </div>
     </article>
