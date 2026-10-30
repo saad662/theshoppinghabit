@@ -189,10 +189,10 @@ export function NavSearch() {
                 <img
                   src={blog.image_url}
                   alt={blog.title}
-                  className="size-11 shrink-0 rounded-lg object-cover"
+                  className="size-11 shrink-0 rounded-sm object-cover"
                 />
               ) : (
-                <div className="size-11 shrink-0 rounded-lg bg-foreground/10" />
+                <div className="size-11 shrink-0 rounded-sm bg-foreground/10" />
               )}
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-medium text-foreground">{blog.title}</p>
@@ -226,7 +226,7 @@ export function NavSearch() {
     >
       {/* Search bar: full-width top row on mobile, compact pill on desktop */}
       <div
-        className={`flex shrink-0 items-center gap-2 border-b transition-all duration-200 sm:rounded-full sm:border-b-0 sm:px-4 ${
+        className={`flex shrink-0 items-center gap-2 border-b transition-all duration-200 sm:rounded-sm sm:border-b-0 sm:px-4 ${
           open
             ? "border-foreground/10 px-4 py-3.5 sm:w-[290px] sm:border sm:border-foreground/15 sm:bg-background sm:py-2.5"
             : "w-10 border-transparent px-0 py-2 sm:w-auto sm:border sm:border-foreground/15 sm:bg-foreground/[0.03] sm:py-2.5"
@@ -301,7 +301,7 @@ export function NavSearch() {
 
       {/* Desktop: results drop down below the compact pill */}
       {open && hasQuery && (
-        <div className="absolute right-0 top-[calc(100%+0.5rem)] z-50 hidden w-[320px] max-w-[85vw] overflow-hidden rounded-2xl border border-foreground/10 bg-background shadow-xl sm:block">
+        <div className="absolute right-0 top-[calc(100%+0.5rem)] z-50 hidden w-[320px] max-w-[85vw] overflow-hidden rounded-sm border border-foreground/10 bg-background shadow-xl sm:block">
           {loading ? (
             <div className="flex items-center justify-center gap-2 px-4 py-6 text-sm text-foreground/60">
               <Loader2 className="size-4 animate-spin" />

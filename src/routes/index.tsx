@@ -287,64 +287,60 @@ function Hero() {
 
   if (!slides.length) {
     return (
-      <section className="relative h-[68vh] min-h-[520px] flex items-center justify-center">
-        Loading...
+      <section className="px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6">
+        <div className="relative h-[60vh] min-h-[440px] w-full flex items-center justify-center border-2 border-foreground/10 rounded-sm bg-foreground/5">
+          Loading...
+        </div>
       </section>
     );
   }
 
   return (
-    <section className="relative h-[68vh] min-h-[520px] w-full overflow-hidden bg-neutral-200">
-      {slides.map((slide, i) => (
-        <div
-          key={i}
-          className="absolute inset-0 transition-opacity duration-1000"
-          style={{ opacity: i === active ? 1 : 0 }}
-          aria-hidden={i !== active}
-        >
-          <img
-            src={slide.image}
-            alt={slide.title.filter(Boolean).join(" ") || "TheShoppingHabit featured deal"}
-            className="w-full h-full object-cover"
-            width={1920}
-            height={1088}
-            loading={i === 0 ? "eager" : "lazy"}
-          />
-        </div>
-      ))}
-
-      <div className="relative h-full flex flex-col justify-end px-4 sm:px-8 pb-12 sm:pb-16">
-        {/*<h1
-            key={`t-${active}`}
-            className="text-[2.25rem] sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tighter text-balance leading-[1.02] sm:leading-none mb-5 sm:mb-6 animate-fade-up"
-          >
-            Shop Smarter.
-            <br />
-             Live Better.
-          </h1>*/}
-        <Link
-          to={`${slides[active].link}`} target="_blank" rel="noopener noreferrer sponsored"
-          className="group self-start inline-flex items-center gap-3 bg-foreground text-background py-2 pr-4 pl-2 rounded-full ring-1 ring-foreground hover:scale-[1.02] transition-transform"
-        >
-          <span className="size-8 bg-background/10 rounded-full flex items-center justify-center shrink-0">
-            <svg className="size-4 text-background" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M8.5 3.5a.5.5 0 0 1 .854-.354l4.5 4.5a.5.5 0 0 1 0 .708l-4.5 4.5A.5.5 0 0 1 8.5 12.5v-9Z" />
-              <path d="M3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8Z" />
-            </svg>
-          </span>
-          <span className="text-sm font-medium">Get Now</span>
-        </Link>
-      </div>
-
-      <div className="absolute bottom-4 sm:bottom-8 right-4 sm:right-8 flex gap-2">
-        {slides.map((_, i) => (
-          <button
+    <section className="px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6">
+      <div className="relative h-[60vh] min-h-[440px] w-full overflow-hidden bg-neutral-200 border-2 border-foreground/10 rounded-sm">
+        {slides.map((slide, i) => (
+          <div
             key={i}
-            onClick={() => setActive(i)}
-            aria-label={`Go to slide ${i + 1}`}
-            className={`h-1 w-8 sm:w-12 transition-colors ${i === active ? "bg-foreground" : "bg-foreground/15 hover:bg-foreground/30"}`}
-          />
+            className="absolute inset-0 transition-opacity duration-1000"
+            style={{ opacity: i === active ? 1 : 0 }}
+            aria-hidden={i !== active}
+          >
+            <img
+              src={slide.image}
+              alt={slide.title.filter(Boolean).join(" ") || "TheShoppingHabit featured deal"}
+              className="w-full h-full object-cover"
+              width={1920}
+              height={1088}
+              loading={i === 0 ? "eager" : "lazy"}
+            />
+          </div>
         ))}
+
+        <div className="relative h-full flex flex-col justify-end px-5 sm:px-10 pb-10 sm:pb-14">
+          <Link
+            to={`${slides[active].link}`} target="_blank" rel="noopener noreferrer sponsored"
+            className="group self-start inline-flex items-center gap-3 bg-brand text-brand-foreground pl-5 pr-2 py-2 rounded-sm hover:brightness-110 transition-[filter]"
+          >
+            <span className="text-sm font-bold uppercase tracking-widest">Get Now</span>
+            <span className="size-8 bg-brand-foreground/15 rounded-sm flex items-center justify-center shrink-0">
+              <svg className="size-4 text-brand-foreground" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8.5 3.5a.5.5 0 0 1 .854-.354l4.5 4.5a.5.5 0 0 1 0 .708l-4.5 4.5A.5.5 0 0 1 8.5 12.5v-9Z" />
+                <path d="M3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8Z" />
+              </svg>
+            </span>
+          </Link>
+        </div>
+
+        <div className="absolute bottom-5 sm:bottom-8 right-5 sm:right-10 flex gap-2">
+          {slides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setActive(i)}
+              aria-label={`Go to slide ${i + 1}`}
+              className={`h-1.5 w-8 sm:w-12 rounded-sm transition-colors ${i === active ? "bg-pop" : "bg-background/40 hover:bg-background/70"}`}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -420,8 +416,7 @@ function ProductShowcase() {
     return (
       <section
         id="work"
-        className="relative py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
-        style={{ background: "var(--gradient-cream)" }}
+        className="relative py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 border-t-2 border-foreground/10"
       >
         <div className="max-w-screen-xl mx-auto text-center text-sm text-muted-foreground">
           Loading products…
@@ -434,8 +429,7 @@ function ProductShowcase() {
     return (
       <section
         id="work"
-        className="relative py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
-        style={{ background: "var(--gradient-cream)" }}
+        className="relative py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 border-t-2 border-foreground/10"
       >
         <div className="max-w-screen-xl mx-auto text-center text-sm text-muted-foreground">
           No products found.
@@ -447,27 +441,15 @@ function ProductShowcase() {
   return (
     <section
       id="work"
-      className="relative py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
-      style={{ background: "var(--gradient-cream)" }}
+      className="relative py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 border-t-2 border-foreground/10"
     >
-      {/* Decorative blob */}
-      <div
-        aria-hidden
-        className="absolute -top-32 -right-40 size-[320px] sm:size-[520px] bg-brand/25 blur-3xl animate-blob pointer-events-none"
-      />
-      <div
-        aria-hidden
-        className="absolute bottom-10 -left-40 size-[280px] sm:size-[420px] bg-mint/40 blur-3xl animate-blob pointer-events-none"
-        style={{ animationDelay: "-7s" }}
-      />
-
       <div className="relative max-w-screen-xl mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-8 sm:mb-10">
           <div>
             <h2 className="text-[2rem] sm:text-4xl md:text-6xl font-semibold tracking-tight text-balance leading-[1] md:leading-[0.95]">
               Objects people are{" "}
-              <span className="italic font-light bg-gradient-to-r from-brand to-pop bg-clip-text text-transparent">
+              <span className="not-italic font-bold underline decoration-pop decoration-[3px] underline-offset-4">
                 obsessing over.
               </span>
             </h2>
@@ -482,14 +464,10 @@ function ProductShowcase() {
 
         {/* Hero featured product */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 mb-10 sm:mb-12">
-          <article className="lg:col-span-7 relative overflow-hidden rounded-3xl bg-brand text-brand-foreground p-6 sm:p-8 md:p-12 group">
-            <div
-              aria-hidden
-              className="absolute -bottom-20 -right-20 size-[420px] bg-pop/40 rounded-full blur-3xl"
-            />
+          <article className="lg:col-span-7 relative overflow-hidden rounded-sm bg-brand text-brand-foreground p-6 sm:p-8 md:p-12 group">
             <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-center">
               <div className="order-2 md:order-1">
-                <span className="inline-flex items-center gap-2 bg-pop text-pop-foreground rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-widest mb-4 sm:mb-5">
+                <span className="inline-flex items-center gap-2 bg-pop text-pop-foreground rounded-sm px-3 py-1 text-[10px] font-bold uppercase tracking-widest mb-4 sm:mb-5">
                   ★ Editor's pick
                 </span>
                 <h3 className="text-2xl sm:text-3xl md:text-5xl font-semibold tracking-tight leading-[1] mb-3 sm:mb-4">
@@ -501,7 +479,6 @@ function ProductShowcase() {
                 <div className="flex items-baseline gap-3 mb-5 sm:mb-6">
                   <span className="text-2xl sm:text-3xl font-semibold">{featured.price}</span>
                   <StarRow rating={featured.rating} />
-                  {/*<span className="text-xs opacity-70">({featured.reviews})</span>*/}
                 </div>
                 <div className="flex gap-3">
                   <Link
@@ -509,14 +486,14 @@ function ProductShowcase() {
                     target="_blank"
                     rel="noopener noreferrer sponsored"
                     data-cursor="Get Now"
-                    className="inline-flex items-center gap-2 bg-cream text-ink rounded-full px-4 sm:px-5 py-2.5 sm:py-3 text-[11px] sm:text-xs font-bold uppercase tracking-widest hover:scale-[1.03] transition-transform"
+                    className="inline-flex items-center gap-2 bg-cream text-ink rounded-sm px-4 sm:px-5 py-2.5 sm:py-3 text-[11px] sm:text-xs font-bold uppercase tracking-widest hover:scale-[1.03] transition-transform"
                   >
                     Get Now
                   </Link>
                   <button
                     onClick={() => toggle(wishlist, setWishlist, featured.id)}
                     aria-label="Save to wishlist"
-                    className="inline-flex items-center justify-center size-10 sm:size-11 rounded-full bg-brand-foreground/10 hover:bg-brand-foreground/20 transition-colors"
+                    className="inline-flex items-center justify-center size-10 sm:size-11 rounded-sm bg-brand-foreground/10 hover:bg-brand-foreground/20 transition-colors"
                   >
                     <svg
                       viewBox="0 0 24 24"
@@ -530,7 +507,7 @@ function ProductShowcase() {
                   </button>
                 </div>
               </div>
-              <div className="order-1 md:order-2 relative aspect-square rounded-2xl overflow-hidden bg-brand-foreground/10">
+              <div className="order-1 md:order-2 relative aspect-square rounded-sm overflow-hidden bg-brand-foreground/10">
                 <img
                   src={featured.image}
                   alt={featured.name}
@@ -542,7 +519,7 @@ function ProductShowcase() {
           </article>
 
           {/* Side column — Trending leaderboard (products only) */}
-          <aside className="lg:col-span-5 relative overflow-hidden rounded-3xl bg-ink text-cream p-6 sm:p-7 flex flex-col gap-4">
+          <aside className="lg:col-span-5 relative overflow-hidden rounded-sm bg-ink text-cream p-6 sm:p-7 flex flex-col gap-4">
             <div className="flex items-center justify-between">
               <span className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.25em]">
                 <span className="relative flex size-2">
@@ -554,7 +531,7 @@ function ProductShowcase() {
               <span className="text-[10px] font-mono text-cream/40">updated 2m ago</span>
             </div>
             <h3 className="text-xl sm:text-2xl font-semibold tracking-tight leading-tight">
-              What people are <span className="italic font-light text-pop">picking up</span> this
+              What people are <span className="not-italic font-bold text-pop">picking up</span> this
               week.
             </h3>
 
@@ -563,14 +540,14 @@ function ProductShowcase() {
                 return (
                   <li
                     key={p.id}
-                    className="group relative flex items-center gap-3 rounded-2xl bg-cream/5 hover:bg-cream/10 p-2.5 sm:p-3 transition-colors animate-fade-up"
+                    className="group relative flex items-center gap-3 rounded-sm bg-cream/5 hover:bg-cream/10 p-2.5 sm:p-3 transition-colors animate-fade-up"
                     style={{ animationDelay: `${i * 120}ms` }}
                   >
                     <span className="font-mono text-[10px] uppercase tracking-widest text-pop tabular-nums w-5 shrink-0">
                       0{i + 1}
                     </span>
                     <div
-                      className={`relative size-12 sm:size-14 shrink-0 rounded-xl overflow-hidden ${p.swatch}`}
+                      className={`relative size-12 sm:size-14 shrink-0 rounded-sm overflow-hidden ${p.swatch}`}
                     >
                       <img
                         src={p.image}
@@ -597,7 +574,7 @@ function ProductShowcase() {
                         to={p.link}
                         target="_blank"
                         rel="noopener noreferrer sponsored"
-                        className="text-[9px] font-bold uppercase tracking-widest rounded-full px-2.5 py-1 transition-colors bg-cream text-ink hover:bg-pop hover:text-pop-foreground"
+                        className="text-[9px] font-bold uppercase tracking-widest rounded-sm px-2.5 py-1 transition-colors bg-cream text-ink hover:bg-pop hover:text-pop-foreground"
                       >
                         + Buy
                       </Link>
@@ -609,9 +586,9 @@ function ProductShowcase() {
 
             <div className="mt-auto pt-2 flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-cream/50">
               <span>Live ranking</span>
-              <a href="#" className="text-pop hover:underline">
+              <Link to="/products" className="text-pop hover:underline">
                 See all →
-              </a>
+              </Link>
             </div>
           </aside>
         </div>
@@ -628,22 +605,17 @@ function ProductShowcase() {
           </span>
         </div>
 
-        {/* Compact product grid — 4 cols on desktop, with 3D tilt */}
-        <div
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-4 md:gap-5"
-          style={{ perspective: "1200px" }}
-        >
+        {/* Compact product grid — 4 cols on desktop */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-4 md:gap-5">
           {filtered.slice(0, 8).map((p) => {
-            const inCart = cart.includes(p.id);
             const liked = wishlist.includes(p.id);
             return (
               <ProductTiltCard
                 key={p.id}
-                className="group relative rounded-2xl overflow-hidden bg-background outline-1 -outline-offset-1 outline-foreground/5 hover:outline-foreground/25 hover:shadow-[0_25px_50px_-25px_rgba(0,0,0,0.35)]"
+                className="group relative rounded-sm overflow-hidden bg-background outline-1 -outline-offset-1 outline-foreground/5 hover:outline-foreground/25 hover:shadow-[0_25px_50px_-25px_rgba(0,0,0,0.35)]"
               >
                 <div
                   className={`relative aspect-[4/5] overflow-hidden ${p.swatch}`}
-                  style={{ transform: "translateZ(20px)" }}
                 >
                   <img
                     src={p.image}
@@ -654,26 +626,23 @@ function ProductShowcase() {
                     className="absolute inset-0 w-full h-full object-cover mix-blend-multiply transition-transform duration-700 ease-out group-hover:scale-110 group-hover:rotate-1"
                   />
 
-                  {/* Index marker (creative touch) */}
-                  <span className="absolute top-3 left-3 font-mono text-[9px] tracking-widest text-foreground/50 bg-background/70 backdrop-blur px-1.5 py-0.5 rounded">
+                  <span className="absolute top-3 left-3 font-mono text-[9px] tracking-widest text-foreground/50 bg-background/70 backdrop-blur px-1.5 py-0.5 rounded-sm">
                     /{p.index}
                   </span>
 
-                  {/* Badge top-right */}
                   {p.badge && (
                     <span
-                      className={`absolute top-3 right-3 text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${badgeStyles[p.badge]}`}
+                      className={`absolute top-3 right-3 text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-sm ${badgeStyles[p.badge]}`}
                     >
                       {p.badge}
                     </span>
                   )}
 
-                  {/* Wishlist (slides in on hover, top-right under badge) */}
                   <button
                     onClick={() => toggle(wishlist, setWishlist, p.id)}
                     aria-label={liked ? "Remove from wishlist" : "Add to wishlist"}
                     data-cursor={liked ? "Saved" : "Save"}
-                    className={`absolute top-10 right-3 size-8 rounded-full grid place-items-center backdrop-blur transition-all duration-300 z-10 ${
+                    className={`absolute top-10 right-3 size-8 rounded-sm grid place-items-center backdrop-blur transition-all duration-300 z-10 ${
                       liked
                         ? "bg-brand text-brand-foreground scale-100 opacity-100"
                         : "bg-background/85 text-foreground opacity-100 sm:opacity-0 sm:-translate-y-1 sm:group-hover:opacity-100 sm:group-hover:translate-y-0 hover:bg-background"
@@ -690,21 +659,20 @@ function ProductShowcase() {
                     </svg>
                   </button>
 
-                  {/* Shop now — visible on mobile, slides up on desktop hover */}
                   <div className="absolute inset-x-3 bottom-3 sm:translate-y-[140%] sm:group-hover:translate-y-0 transition-transform duration-500 ease-out">
                     <Link
                       to={p.link}
                       target="_blank"
                       rel="noopener noreferrer sponsored"
                       data-cursor="Shop now"
-                      className="block w-full text-center rounded-full py-2.5 text-[10px] font-bold uppercase tracking-widest transition-colors bg-ink text-cream hover:bg-brand"
+                      className="block w-full text-center rounded-sm py-2.5 text-[10px] font-bold uppercase tracking-widest transition-colors bg-ink text-cream hover:bg-brand"
                     >
                       Shop now
                     </Link>
                   </div>
                 </div>
 
-                <div className="p-3 sm:p-3.5" style={{ transform: "translateZ(35px)" }}>
+                <div className="p-3 sm:p-3.5">
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-[9px] font-mono uppercase tracking-widest text-muted-foreground truncate">
                       {p.category}
@@ -732,9 +700,9 @@ function ProductShowcase() {
           <Link
             to="/products"
             data-cursor="Shop all"
-            className="inline-flex items-center gap-3 bg-ink text-cream rounded-full pl-2 pr-4 sm:pr-5 py-2 text-[11px] sm:text-xs font-bold uppercase tracking-widest hover:scale-[1.03] transition-transform"
+            className="inline-flex items-center gap-3 bg-ink text-cream rounded-sm pl-2 pr-4 sm:pr-5 py-2 text-[11px] sm:text-xs font-bold uppercase tracking-widest hover:scale-[1.03] transition-transform"
           >
-            <span className="size-7 rounded-full bg-pop text-pop-foreground grid place-items-center">
+            <span className="size-7 rounded-sm bg-pop text-pop-foreground grid place-items-center">
               →
             </span>
             Shop the full catalogue
@@ -750,35 +718,9 @@ function BlogSection() {
 }
 
 function ProductTiltCard({ children, className }: { children: ReactNode; className?: string }) {
-  const ref = useRef<HTMLElement | null>(null);
-
-  const handleMove = (e: ReactMouseEvent<HTMLElement>) => {
-    const el = ref.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width;
-    const y = (e.clientY - r.top) / r.height;
-    const rx = (0.5 - y) * 10;
-    const ry = (x - 0.5) * 12;
-    el.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px) scale(1.02)`;
-  };
-
-  const handleLeave = () => {
-    const el = ref.current;
-    if (el) el.style.transform = "rotateX(0) rotateY(0) translateY(0) scale(1)";
-  };
-
   return (
     <article
-      ref={ref as RefObject<HTMLElement>}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
-      className={className}
-      style={{
-        transformStyle: "preserve-3d",
-        transition: "transform 450ms cubic-bezier(0.19,1,0.22,1)",
-        willChange: "transform",
-      }}
+      className={`${className ?? ""} transition-transform duration-200 ease-out hover:-translate-y-1`}
     >
       {children}
     </article>
@@ -819,8 +761,6 @@ function InteractiveBlogCards({
   cards,
   saved,
   onToggleSave,
-  hoverId,
-  onHover,
 }: {
   cards: InteractiveCard[];
   saved: string[];
@@ -829,40 +769,6 @@ function InteractiveBlogCards({
   onHover: (id: string | null) => void;
 }) {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
-  const itemRefs = useRef<Array<HTMLDivElement | null>>([]);
-
-  useEffect(() => {
-    const scroller = scrollerRef.current;
-    if (!scroller) return;
-
-    const update = () => {
-      const sRect = scroller.getBoundingClientRect();
-      const center = sRect.left + sRect.width / 2;
-      itemRefs.current.forEach((el) => {
-        if (!el) return;
-        const r = el.getBoundingClientRect();
-        const itemCenter = r.left + r.width / 2;
-        // Distance from viewport-center of scroller, normalised to half-width
-        const dist = (itemCenter - center) / (sRect.width / 2);
-        const clamped = Math.max(-1.2, Math.min(1.2, dist));
-        const rotateY = clamped * -28;
-        const scale = 1 - Math.min(0.18, Math.abs(clamped) * 0.18);
-        const translateZ = -Math.abs(clamped) * 80;
-        const opacity = 1 - Math.min(0.45, Math.abs(clamped) * 0.45);
-        el.style.transform = `translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
-        el.style.opacity = String(opacity);
-        el.style.zIndex = String(100 - Math.round(Math.abs(clamped) * 100));
-      });
-    };
-
-    update();
-    scroller.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    return () => {
-      scroller.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
-  }, [cards.length]);
 
   const scrollBy = (dir: 1 | -1) => {
     const s = scrollerRef.current;
@@ -883,7 +789,7 @@ function InteractiveBlogCards({
             type="button"
             aria-label="Scroll left"
             onClick={() => scrollBy(-1)}
-            className="size-9 sm:size-10 grid place-items-center rounded-full bg-foreground/5 hover:bg-foreground/10 text-foreground transition-colors"
+            className="size-9 sm:size-10 grid place-items-center rounded-sm border-2 border-foreground/15 hover:border-brand text-foreground transition-colors"
           >
             <svg
               viewBox="0 0 24 24"
@@ -899,7 +805,7 @@ function InteractiveBlogCards({
             type="button"
             aria-label="Scroll right"
             onClick={() => scrollBy(1)}
-            className="size-9 sm:size-10 grid place-items-center rounded-full bg-ink text-cream hover:bg-brand transition-colors"
+            className="size-9 sm:size-10 grid place-items-center rounded-sm bg-brand text-brand-foreground hover:brightness-110 transition-[filter]"
           >
             <svg
               viewBox="0 0 24 24"
@@ -914,9 +820,8 @@ function InteractiveBlogCards({
         </div>
       </div>
 
-      {/* Horizontal 3D scroller */}
+      {/* Flat horizontal photo scroller — no 3D tilt */}
       <div className="relative -mx-4 sm:-mx-6 lg:-mx-8">
-        {/* Edge fades */}
         <div
           aria-hidden
           className="pointer-events-none absolute inset-y-0 left-0 w-10 sm:w-16 z-10 bg-gradient-to-r from-background to-transparent"
@@ -928,56 +833,28 @@ function InteractiveBlogCards({
 
         <div
           ref={scrollerRef}
-          className="flex gap-4 sm:gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth px-4 sm:px-6 lg:px-8 py-6 sm:py-8 scrollbar-none"
-          style={{ perspective: "1400px", perspectiveOrigin: "center", scrollbarWidth: "none" }}
+          className="flex gap-4 sm:gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth px-4 sm:px-6 lg:px-8 py-2 scrollbar-none"
+          style={{ scrollbarWidth: "none" }}
         >
-          {cards.map((c, i) => {
-            const a = accentClasses[c.accent];
-            const isHover = hoverId === c.id;
+          {cards.map((c) => {
             const isSaved = saved.includes(c.id);
             return (
-              <div
-                key={c.id}
-                ref={(el) => {
-                  itemRefs.current[i] = el;
-                }}
-                className="snap-center shrink-0 w-[78%] xs:w-[68%] sm:w-[56%] md:w-[44%] lg:w-[34%] xl:w-[28%]"
-                style={{
-                  transformStyle: "preserve-3d",
-                  transition: "transform 380ms cubic-bezier(0.19,1,0.22,1), opacity 380ms ease",
-                  willChange: "transform, opacity",
-                }}
-              >
+              <div key={c.id} className="snap-center shrink-0 w-[78%] xs:w-[68%] sm:w-[56%] md:w-[44%] lg:w-[34%] xl:w-[28%]">
                 <Link
                   to="/blog/$slug"
                   params={{ slug: c.postId }}
                   data-cursor="Read"
-                  onMouseEnter={() => onHover(c.id)}
-                  onMouseLeave={() => onHover(null)}
-                  className={`group relative block overflow-hidden rounded-3xl ring-1 ${a.ring} ring-inset ${a.bg} aspect-[3/4] p-5 sm:p-6`}
-                  style={{ boxShadow: "0 30px 60px -30px rgba(0,0,0,0.45)" }}
+                  className="group relative block overflow-hidden rounded-sm border-2 border-foreground/10 aspect-[3/4]"
                 >
-                  {/* Background image revealed on hover */}
-                  <div
-                    aria-hidden
-                    className="absolute inset-0 transition-opacity duration-500 opacity-[0.55] sm:opacity-0 sm:group-hover:opacity-[0.55]"
-                  >
-                    <img
-                      src={c.image}
-                      alt={c.title}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-                  </div>
-                  {/* Halo blob */}
-                  <div
-                    aria-hidden
-                    className={`absolute -bottom-16 -right-16 size-48 rounded-full blur-3xl ${a.halo} transition-transform duration-700`}
-                    style={{ transform: isHover ? "scale(1.4)" : "scale(1)" }}
+                  <img
+                    src={c.image}
+                    alt={c.title}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/35 to-transparent" />
 
-                  <div className="relative h-full flex flex-col justify-between">
+                  <div className="relative h-full flex flex-col justify-between p-5 sm:p-6 text-cream">
                     <div className="flex items-start justify-between">
                       <button
                         type="button"
@@ -986,10 +863,10 @@ function InteractiveBlogCards({
                           onToggleSave(c.id);
                         }}
                         aria-label={isSaved ? "Unsave" : "Save"}
-                        className={`size-8 grid place-items-center rounded-full transition-all ${
+                        className={`size-8 grid place-items-center rounded-sm transition-all ${
                           isSaved
-                            ? "bg-cream text-ink scale-110"
-                            : "bg-black/15 text-current hover:bg-black/25"
+                            ? "bg-pop text-pop-foreground"
+                            : "bg-ink/40 text-cream hover:bg-ink/60"
                         }`}
                       >
                         <svg
@@ -1008,18 +885,12 @@ function InteractiveBlogCards({
                       <h4 className="text-xl sm:text-2xl md:text-3xl font-semibold tracking-tight leading-[1.05] text-balance mb-3">
                         {c.title}
                       </h4>
-                      <p className="text-sm text-pretty leading-snug opacity-85 mb-4 line-clamp-3">
+                      <p className="text-sm text-pretty leading-snug text-cream/80 mb-4 line-clamp-3">
                         {c.excerpt}
                       </p>
-                      <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.2em] opacity-75">
-                        {/*<span>{c.meta}</span>*/}
-                        <span
-                          aria-hidden
-                          className="inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform duration-500"
-                        >
-                          Read →
-                        </span>
-                      </div>
+                      <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.2em] text-pop group-hover:translate-x-1 transition-transform duration-300">
+                        Read →
+                      </span>
                     </div>
                   </div>
                 </Link>
@@ -1132,7 +1003,9 @@ function BlogSectionInner() {
             </p>
             <h2 className="text-[2rem] sm:text-4xl md:text-6xl font-semibold tracking-tight text-balance leading-[1] md:leading-[0.95]">
               Curated Reads &{" "}
-              <span className="italic font-light text-muted-foreground">Trends</span>
+              <span className="not-italic font-bold underline decoration-pop decoration-[3px] underline-offset-4">
+                Trends
+              </span>
             </h2>
           </div>
         </div>
@@ -1145,7 +1018,7 @@ function BlogSectionInner() {
             data-cursor="Read featured"
             onMouseEnter={() => setHoverId(featuredArticle.id)}
             onMouseLeave={() => setHoverId(null)}
-            className="group relative grid grid-cols-1 lg:grid-cols-12 gap-0 mb-12 sm:mb-14 overflow-hidden rounded-3xl bg-ink text-cream"
+            className="group relative grid grid-cols-1 lg:grid-cols-12 gap-0 mb-12 sm:mb-14 overflow-hidden rounded-sm bg-ink text-cream"
           >
             <div className="lg:col-span-7 relative aspect-[16/10] lg:aspect-auto overflow-hidden">
               <img
@@ -1154,7 +1027,7 @@ function BlogSectionInner() {
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                 loading="lazy"
               />
-              <span className="absolute top-5 left-5 inline-flex items-center gap-2 bg-pop text-pop-foreground rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-widest">
+              <span className="absolute top-5 left-5 inline-flex items-center gap-2 bg-pop text-pop-foreground rounded-sm px-3 py-1 text-[10px] font-bold uppercase tracking-widest">
                 ★ Featured
               </span>
             </div>
@@ -1186,7 +1059,7 @@ function BlogSectionInner() {
                       toggleSave(featuredArticle.id);
                     }}
                     aria-label={saved.includes(featuredArticle.id) ? "Unsave" : "Save"}
-                    className={`size-9 sm:size-10 rounded-full grid place-items-center transition-all ${
+                    className={`size-9 sm:size-10 rounded-sm grid place-items-center transition-all ${
                       saved.includes(featuredArticle.id)
                         ? "bg-brand text-brand-foreground scale-110"
                         : "bg-cream/10 text-cream hover:bg-cream/20"
@@ -1202,7 +1075,7 @@ function BlogSectionInner() {
                       <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
                     </svg>
                   </button>
-                  <span className="inline-flex items-center gap-2 bg-cream text-ink rounded-full px-3.5 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-xs font-bold uppercase tracking-widest group-hover:bg-pop group-hover:text-pop-foreground transition-colors">
+                  <span className="inline-flex items-center gap-2 bg-cream text-ink rounded-sm px-3.5 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-xs font-bold uppercase tracking-widest group-hover:bg-pop group-hover:text-pop-foreground transition-colors">
                     Read now →
                   </span>
                 </div>
@@ -1279,7 +1152,7 @@ function BlogSectionInner() {
                     onClick={() => toggleSave(a.id)}
                     aria-label={isSaved ? "Unsave article" : "Save article"}
                     data-cursor={isSaved ? "Saved" : "Save"}
-                    className={`hidden md:grid absolute right-0 top-1/2 -translate-y-1/2 size-9 place-items-center rounded-full transition-all ${
+                    className={`hidden md:grid absolute right-0 top-1/2 -translate-y-1/2 size-9 place-items-center rounded-sm transition-all ${
                       isSaved
                         ? "bg-brand text-brand-foreground opacity-100 scale-100"
                         : "bg-foreground/5 text-foreground opacity-0 group-hover:opacity-100"
@@ -1303,7 +1176,7 @@ function BlogSectionInner() {
 
         {list.length === 0 && !showFeatured && (
           <p className="text-sm text-muted-foreground py-12 text-center">
-            No entries under “{tag}” yet.
+            No entries under "{tag}" yet.
           </p>
         )}
 
@@ -1312,9 +1185,9 @@ function BlogSectionInner() {
           <Link
             to="/blog"
             data-cursor="Explore"
-            className="group inline-flex items-center gap-3 bg-ink text-cream rounded-full pl-2 pr-5 sm:pr-6 py-2 text-[11px] sm:text-xs font-bold uppercase tracking-widest hover:scale-[1.04] transition-transform"
+            className="group inline-flex items-center gap-3 bg-ink text-cream rounded-sm pl-2 pr-5 sm:pr-6 py-2 text-[11px] sm:text-xs font-bold uppercase tracking-widest hover:scale-[1.04] transition-transform"
           >
-            <span className="size-9 sm:size-10 grid place-items-center rounded-full bg-pop text-pop-foreground transition-transform group-hover:rotate-45">
+            <span className="size-9 sm:size-10 grid place-items-center rounded-sm bg-pop text-pop-foreground transition-transform group-hover:rotate-45">
               <svg viewBox="0 0 16 16" fill="currentColor" className="size-4">
                 <path d="M8.5 3.5a.5.5 0 0 1 .854-.354l4.5 4.5a.5.5 0 0 1 0 .708l-4.5 4.5A.5.5 0 0 1 8.5 12.5v-9Z" />
                 <path d="M3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8Z" />
@@ -1326,8 +1199,8 @@ function BlogSectionInner() {
 
         {/* Saved counter */}
         {saved.length > 0 && (
-          <div className="mt-10 inline-flex items-center gap-3 bg-ink text-cream rounded-full pl-2 pr-5 py-2 text-xs font-bold uppercase tracking-widest animate-fade-up">
-            <span className="size-7 rounded-full bg-brand text-brand-foreground grid place-items-center font-mono">
+          <div className="mt-10 inline-flex items-center gap-3 bg-ink text-cream rounded-sm pl-2 pr-5 py-2 text-xs font-bold uppercase tracking-widest animate-fade-up">
+            <span className="size-7 rounded-sm bg-brand text-brand-foreground grid place-items-center font-mono">
               {saved.length}
             </span>
             saved to your reading list
@@ -1337,7 +1210,7 @@ function BlogSectionInner() {
         {/* Floating cursor-tracked preview (desktop) */}
         <div
           aria-hidden
-          className="hidden lg:block pointer-events-none fixed top-0 left-0 z-40 w-[280px] aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl outline-1 outline-black/10 transition-[opacity,transform] duration-300 ease-out"
+          className="hidden lg:block pointer-events-none fixed top-0 left-0 z-40 w-[280px] aspect-[4/5] rounded-sm overflow-hidden shadow-2xl outline-1 outline-black/10 transition-[opacity,transform] duration-300 ease-out"
           style={{
             opacity: previewed ? 1 : 0,
             transform: `translate(${coords.x + 24}px, ${coords.y - 180}px) scale(${previewed ? 1 : 0.9})`,
@@ -1386,7 +1259,7 @@ function Index() {
 
       <h1 className="sr-only">TheShoppingHabit — Product Reviews & Buying Guides</h1>
 
-      <nav className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-foreground/5 py-2 sm:py-3 px-4 sm:px-6 lg:px-8 flex justify-between items-center gap-3 overflow-visible">
+      <nav className="sticky top-0 z-40 bg-background border-b-2 border-brand py-3 sm:py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center gap-3 overflow-visible">
         <Link to="/" className="flex items-center shrink-0">
           <Logo />
         </Link>
@@ -1394,41 +1267,33 @@ function Index() {
           <Link
             to="/"
             activeOptions={{ exact: true }}
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
+            className="text-xs font-bold uppercase tracking-widest transition-colors relative pb-1"
+            activeProps={{ className: "text-foreground after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-[2px] after:bg-brand" }}
+            inactiveProps={{ className: "text-foreground/50 hover:text-foreground" }}
           >
             Home
           </Link>
           <Link
             to="/blog"
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
+            className="text-xs font-bold uppercase tracking-widest transition-colors relative pb-1"
+            activeProps={{ className: "text-foreground after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-[2px] after:bg-brand" }}
+            inactiveProps={{ className: "text-foreground/50 hover:text-foreground" }}
           >
             Blogs
           </Link>
           <Link
             to="/products"
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
+            className="text-xs font-bold uppercase tracking-widest transition-colors relative pb-1"
+            activeProps={{ className: "text-foreground after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-[2px] after:bg-brand" }}
+            inactiveProps={{ className: "text-foreground/50 hover:text-foreground" }}
           >
             Shop
-          </Link>
-          <Link
-            to="/stores"
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
-          >
-            Stores
           </Link>
         </div>
         <div className="flex items-center gap-2">
           {/*<Link
             to="/landing-page"
-            className="hidden sm:inline-flex items-center gap-2 rounded-full border border-emerald-500/40 text-emerald-700 hover:bg-emerald-500/10 px-3.5 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-bold uppercase tracking-widest transition-colors"
+            className="hidden sm:inline-flex items-center gap-2 rounded-sm border border-emerald-500/40 text-emerald-700 hover:bg-emerald-500/10 px-3.5 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-bold uppercase tracking-widest transition-colors"
           >
             Landing Page
           </Link>*/}

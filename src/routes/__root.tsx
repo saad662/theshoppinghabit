@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
 } from "@tanstack/react-router";
 import { useEffect } from "react";
@@ -102,10 +103,16 @@ function RootComponent() {
     document.querySelectorAll('[data-default="true"]').forEach((el) => el.remove());
   }, []);
 
+  // The custom cursor is part of the original landing page's look, which
+  // stays unchanged — everywhere else on the new site uses the normal
+  // system cursor.
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isLandingPage = pathname.startsWith("/landing-page/");
+
   return (
     <QueryClientProvider client={queryClient}>
       <HeadContent />
-      <InteractiveCursor />
+      {isLandingPage && <InteractiveCursor />}
       <Outlet />
       <Toaster position="bottom-center" richColors />
     </QueryClientProvider>

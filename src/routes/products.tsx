@@ -146,33 +146,8 @@ const sortOptions: { key: SortKey; label: string }[] = [
 ];
 
 function ProductTiltCard({ children, className }: { children: ReactNode; className?: string }) {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const handleMove = (e: ReactMouseEvent<HTMLDivElement>) => {
-    const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    const ry = x * 10;
-    const rx = -y * 10;
-    el.style.transform = `perspective(1100px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px) scale(1.02)`;
-  };
-  const handleLeave = () => {
-    const el = ref.current;
-    if (!el) return;
-    el.style.transform = "perspective(1100px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)";
-  };
   return (
-    <div
-      ref={ref}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
-      className={className}
-      style={{
-        transformStyle: "preserve-3d",
-        transition: "transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1)",
-      }}
-    >
+    <div className={`${className ?? ""} transition-transform duration-200 ease-out hover:-translate-y-1`}>
       {children}
     </div>
   );
@@ -479,9 +454,8 @@ const handleNewsletterSubmit = async (e: FormEvent<HTMLFormElement>) => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <h1 className="sr-only">All Products — TheShoppingHabit</h1>
       {/* Top nav */}
-      <nav className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-foreground/5 py-2 sm:py-3 px-4 sm:px-6 lg:px-8 flex justify-between items-center gap-3 overflow-visible">
+      <nav className="sticky top-0 z-40 bg-background border-b-2 border-brand py-3 sm:py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center gap-3 overflow-visible">
         <Link to="/" className="flex items-center shrink-0">
           <Logo />
         </Link>
@@ -489,35 +463,27 @@ const handleNewsletterSubmit = async (e: FormEvent<HTMLFormElement>) => {
           <Link
             to="/"
             activeOptions={{ exact: true }}
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
+            className="text-xs font-bold uppercase tracking-widest transition-colors relative pb-1"
+            activeProps={{ className: "text-foreground after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-[2px] after:bg-brand" }}
+            inactiveProps={{ className: "text-foreground/50 hover:text-foreground" }}
           >
             Home
           </Link>
           <Link
             to="/blog"
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
+            className="text-xs font-bold uppercase tracking-widest transition-colors relative pb-1"
+            activeProps={{ className: "text-foreground after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-[2px] after:bg-brand" }}
+            inactiveProps={{ className: "text-foreground/50 hover:text-foreground" }}
           >
             Blogs
           </Link>
           <Link
             to="/products"
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
+            className="text-xs font-bold uppercase tracking-widest transition-colors relative pb-1"
+            activeProps={{ className: "text-foreground after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-[2px] after:bg-brand" }}
+            inactiveProps={{ className: "text-foreground/50 hover:text-foreground" }}
           >
             Shop
-          </Link>
-          <Link
-            to="/stores"
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
-          >
-            Stores
           </Link>
         </div>
         <div className="flex items-center gap-2">
@@ -526,360 +492,235 @@ const handleNewsletterSubmit = async (e: FormEvent<HTMLFormElement>) => {
         <MobileMenu />
       </nav>
 
-      {/* Hero — only on first page */}
-      {currentPage === 1 && (
-        <section className="relative overflow-hidden border-b border-foreground/10">
-          <div
-            className="absolute inset-0 -z-10 opacity-60"
-            style={{
-              background:
-                "radial-gradient(900px 400px at 80% 20%, color-mix(in oklab, var(--brand) 22%, transparent), transparent), radial-gradient(700px 350px at 10% 90%, color-mix(in oklab, var(--pop) 18%, transparent), transparent)",
-            }}
-          />
-          <div className="px-4 sm:px-8 lg:px-12 pt-8 sm:pt-12 pb-10 sm:pb-14">
-            <div className="max-w-[1400px] mx-auto">
-              <div className="flex items-center justify-between gap-3 mb-5 sm:mb-6">
-                <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
-                  <span className="size-2 rounded-full bg-pop animate-pulse" />
-                  <span>Shop by category</span>
-                </div>
-                {/*<span className="text-[11px] uppercase tracking-widest text-muted-foreground">{products.length} objects</span>*/}
-              </div>
+      {/* Shop: sidebar filters + grid — replaces the old stacked chip/pill/toolbar/marquee bars */}
+      <section className="px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+        <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-8 lg:gap-10">
+          {/* Sidebar */}
+          <aside className="lg:sticky lg:top-24 self-start space-y-8">
+            <div>
+              <h1 className="text-2xl font-semibold tracking-tight mb-1">Shop</h1>
+              <p className="text-xs text-muted-foreground">{filtered.length} products</p>
+            </div>
 
-              {/* Hero category feature chips — all 6 */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">⌕</span>
+              <input
+                value={query}
+                onChange={(e) => setQueryAndReset(e.target.value)}
+                placeholder="Search products..."
+                className="w-full pl-9 pr-3 py-2.5 rounded-sm bg-foreground/[0.04] border border-foreground/10 text-sm focus:outline-none focus:border-brand transition-colors"
+              />
+            </div>
+
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-3">Category</p>
+              <ul className="space-y-1">
                 {heroCategories.map((c) => {
-                  const count =
-                    c === "All" ? products.length : products.filter((p) => p.category === c).length;
+                  const count = c === "All" ? products.length : products.filter((p) => p.category === c).length;
                   const active = c === category;
                   return (
+                    <li key={c}>
+                      <button
+                        onClick={() => setCategoryAndReset(c)}
+                        className={`w-full flex items-center justify-between px-3 py-2 rounded-sm text-sm transition-colors ${
+                          active
+                            ? "bg-ink text-cream font-semibold"
+                            : "text-foreground/70 hover:bg-foreground/5 hover:text-foreground"
+                        }`}
+                      >
+                        <span className="flex items-center gap-2">
+                          <span aria-hidden>{categoryIcons[c]}</span>
+                          {c}
+                        </span>
+                        <span className={`text-[10px] tabular-nums ${active ? "text-cream/60" : "text-muted-foreground"}`}>
+                          {count}
+                        </span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-3">Quick filters</p>
+              <div className="flex flex-wrap gap-1.5">
+                {quickTags.map((t) => {
+                  const active = t.key === tag;
+                  return (
                     <button
-                      key={c}
-                      onClick={() => setCategoryAndReset(c)}
-                      className={`group relative overflow-hidden rounded-2xl border text-left p-3 sm:p-4 transition-all ${
+                      key={t.key}
+                      onClick={() => setTagAndReset(t.key)}
+                      className={`rounded-sm border px-2.5 py-1 text-[11px] font-medium transition-colors ${
                         active
-                          ? "bg-ink text-cream border-ink shadow-[0_20px_40px_-20px_rgba(0,0,0,0.5)]"
-                          : "bg-card border-foreground/10 hover:border-foreground/40 hover:-translate-y-0.5 hover:shadow-[0_12px_24px_-12px_rgba(0,0,0,0.25)]"
+                          ? "bg-ink text-cream border-ink"
+                          : "bg-background text-foreground/70 border-foreground/15 hover:border-foreground/40"
                       }`}
                     >
-                      <div className="flex items-start justify-between">
-                        <span
-                          className={`text-xl sm:text-2xl leading-none ${active ? "text-pop" : "text-foreground/60"}`}
-                        >
-                          {categoryIcons[c]}
-                        </span>
-                        <span
-                          className={`text-[10px] tabular-nums uppercase tracking-widest ${active ? "text-cream/60" : "text-muted-foreground"}`}
-                        >
-                          {String(count).padStart(2, "0")}
-                        </span>
-                      </div>
-                      <div className="mt-5 sm:mt-8 font-serif text-base sm:text-xl tracking-tight leading-tight">
-                        {c}
-                      </div>
-                      <div
-                        className={`text-[10px] uppercase tracking-widest mt-1 ${active ? "text-cream/60" : "text-muted-foreground"}`}
-                      >
-                        {active ? "Showing" : "Filter"}
-                      </div>
+                      {t.label}
                     </button>
                   );
                 })}
               </div>
             </div>
-          </div>
-        </section>
-      )}
 
-      {/* Quick-tag bar — only on first page */}
-      {currentPage === 1 && (
-        <div className="border-b border-foreground/10 bg-foreground/[0.02] relative">
-          {tagsExpanded && (
-            <>
-              <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-background to-transparent z-10" />
-              <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-background to-transparent z-10" />
-            </>
-          )}
-          <div className="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12 py-3 flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-widest text-muted-foreground shrink-0 mr-1">
-              Quick
-            </span>
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-3">Sort by</p>
+              <div className="flex flex-col gap-0.5">
+                {sortOptions.map((opt) => (
+                  <button
+                    key={opt.key}
+                    onClick={() => setSortAndReset(opt.key)}
+                    className={`text-left px-3 py-2 rounded-sm text-sm transition-colors ${
+                      sort === opt.key ? "bg-brand-soft text-brand font-semibold" : "text-foreground/70 hover:bg-foreground/5"
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </aside>
 
-            {!tagsExpanded ? (
-              <>
-                <div className="flex items-center gap-2 flex-1 overflow-hidden">
-                  {quickTags.slice(0, 4).map((t) => {
-                    const active = t.key === tag;
-                    return (
-                      <button
-                        key={t.key}
-                        onClick={() => setTagAndReset(t.key)}
-                        className={`shrink-0 inline-flex items-center rounded-full border px-3 py-1 text-[11px] font-medium transition-all ${
-                          active
-                            ? "bg-ink text-cream border-ink"
-                            : "bg-background text-foreground/70 border-foreground/15 hover:border-foreground/40 hover:text-foreground"
-                        }`}
-                      >
-                        {t.label}
-                      </button>
-                    );
-                  })}
-                </div>
+          {/* Grid */}
+          <div>
+            {filtered.length === 0 ? (
+              <div className="text-center py-20">
+                <p className="text-3xl font-serif italic text-muted-foreground">Nothing matches.</p>
                 <button
-                  onClick={() => setTagsExpanded(true)}
-                  className="shrink-0 inline-flex items-center gap-1.5 rounded-full bg-ink text-cream px-3 py-1 text-[11px] font-bold uppercase tracking-widest hover:scale-[1.04] transition-transform"
+                  onClick={() => {
+                    setQueryAndReset("");
+                    setCategoryAndReset("All");
+                  }}
+                  className="mt-4 text-sm underline underline-offset-4"
                 >
-                  +{quickTags.length - 4} more →
+                  Reset filters
                 </button>
-              </>
+              </div>
             ) : (
               <>
-                <div className="flex items-center gap-2 flex-1 overflow-x-auto scrollbar-none animate-fade-in">
-                  {quickTags.map((t) => {
-                    const active = t.key === tag;
-                    return (
-                      <button
-                        key={t.key}
-                        onClick={() => setTagAndReset(t.key)}
-                        className={`shrink-0 inline-flex items-center rounded-full border px-3 py-1 text-[11px] font-medium transition-all ${
-                          active
-                            ? "bg-ink text-cream border-ink"
-                            : "bg-background text-foreground/70 border-foreground/15 hover:border-foreground/40 hover:text-foreground"
-                        }`}
-                      >
-                        {t.label}
-                      </button>
-                    );
-                  })}
+                <div className="flex items-center gap-2 text-[11px] text-muted-foreground mb-4">
+                  <span className="size-1.5 rounded-full bg-mint" /> In stock
+                  <span className="size-1.5 rounded-full bg-pop ml-3" /> Limited
+                  <span className="size-1.5 rounded-full bg-brand ml-3" /> Pre-order
+                  <span className="ml-auto">Page {currentPage} of {totalPages}</span>
                 </div>
-                <button
-                  onClick={() => setTagsExpanded(false)}
-                  aria-label="Collapse tags"
-                  className="shrink-0 size-7 grid place-items-center rounded-full border border-foreground/15 text-foreground/60 hover:border-foreground/40 hover:text-foreground transition-colors relative z-20"
-                >
-                  ✕
-                </button>
+                <div className="grid grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
+                  {paginated.map((p, idx) => (
+                    <ProductTiltCard key={p.id} className="group relative">
+                      <article className="relative bg-card rounded-sm border border-foreground/10 overflow-hidden h-full flex flex-col shadow-[0_1px_0_rgba(0,0,0,0.04)] hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.35)] transition-shadow">
+                        <button
+                          type="button"
+                          className={`relative aspect-square overflow-hidden block w-full text-left ${p.swatch}`}
+                          aria-label={`Quick view ${p.name}`}
+                        >
+                          <img
+                            src={p.image_url}
+                            alt={p.name}
+                            loading={idx < 5 ? "eager" : "lazy"}
+                            className="absolute inset-0 w-full h-full object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-700"
+                          />
+                          <span className="absolute top-2 left-2 text-[9px] font-bold tracking-widest uppercase bg-background/90 backdrop-blur px-1.5 py-0.5 rounded-sm">
+                            {p.index}
+                          </span>
+                          <span
+                            role="button"
+                            aria-label="Save"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleSaved(p.id);
+                            }}
+                            className={`absolute bottom-2 right-2 size-7 grid place-items-center rounded-full bg-background/90 backdrop-blur text-xs transition-all hover:scale-110 ${
+                              saved.has(p.id) ? "opacity-100 text-pop" : "opacity-0 group-hover:opacity-100"
+                            }`}
+                          >
+                            {saved.has(p.id) ? "♥" : "♡"}
+                          </span>
+                        </button>
+                        <div className="p-3 flex flex-col gap-1.5 flex-1">
+                          <div className="flex items-start justify-between gap-2">
+                            <h3 className="font-serif text-sm sm:text-base leading-tight line-clamp-1">
+                              {p.name}
+                            </h3>
+                            <span className="font-mono text-xs font-semibold tabular-nums shrink-0">
+                              {p.price}
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-between text-[10px] text-muted-foreground">
+                            <span className="uppercase tracking-widest">{p.categoryLabel}</span>
+                            <span className="flex items-center gap-1">
+                              <span className="text-pop">★</span>
+                              <span className="font-medium text-foreground tabular-nums">
+                                {p.rating.toFixed(1)}
+                              </span>
+                            </span>
+                          </div>
+                          <Link
+                            to={p.link}
+                            data-cursor="Bag it"
+                            target="_blank"
+                            rel="noopener noreferrer sponsored"
+                            className="mt-2 inline-flex items-center justify-center gap-1.5 bg-ink text-cream rounded-sm py-1.5 text-[10px] font-bold uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-transform"
+                          >
+                            + Get Now · {p.price}
+                          </Link>
+                        </div>
+                      </article>
+                    </ProductTiltCard>
+                  ))}
+                </div>
+                {totalPages > 1 && (
+                  <div className="mt-10 flex items-center justify-center gap-2 flex-wrap">
+                    <button
+                      onClick={() => goToPage(currentPage - 1)}
+                      disabled={currentPage === 1}
+                      className="inline-flex items-center gap-1.5 rounded-sm border border-foreground/15 px-4 py-2 text-[11px] font-bold uppercase tracking-widest hover:border-foreground/40 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                    >
+                      ← Prev
+                    </button>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => {
+                      const active = p === currentPage;
+                      return (
+                        <button
+                          key={p}
+                          onClick={() => goToPage(p)}
+                          aria-current={active ? "page" : undefined}
+                          className={`size-10 grid place-items-center rounded-sm text-sm font-semibold tabular-nums transition-all ${
+                            active
+                              ? "bg-ink text-cream scale-110 shadow-[0_8px_20px_-8px_rgba(0,0,0,0.4)]"
+                              : "bg-foreground/[0.04] text-foreground/70 hover:bg-foreground/[0.08] hover:text-foreground"
+                          }`}
+                        >
+                          {p}
+                        </button>
+                      );
+                    })}
+                    <button
+                      onClick={() => goToPage(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                      className="inline-flex items-center gap-1.5 rounded-sm border border-foreground/15 px-4 py-2 text-[11px] font-bold uppercase tracking-widest hover:border-foreground/40 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                    >
+                      Next →
+                    </button>
+                  </div>
+                )}
               </>
             )}
           </div>
         </div>
-      )}
-
-      {/* Toolbar — search & sort */}
-      <section className="px-4 sm:px-8 lg:px-12 py-4 border-b border-foreground/10 sticky top-[57px] sm:top-[65px] z-30 bg-background/85 backdrop-blur-md">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-            <div className="relative flex-1 max-w-md">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">
-                ⌕
-              </span>
-              <input
-                value={query}
-                onChange={(e) => setQueryAndReset(e.target.value)}
-                placeholder="Search materials, names, finishes..."
-                className="w-full pl-9 pr-3 py-2 rounded-full bg-foreground/[0.04] border border-foreground/10 text-sm focus:outline-none focus:border-foreground/40 transition-colors"
-              />
-            </div>
-            <div className="flex flex-wrap gap-1.5 items-center">
-              <span className="text-[11px] uppercase tracking-widest text-muted-foreground mr-2">
-                Sort
-              </span>
-              {sortOptions.map((opt) => (
-                <button
-                  key={opt.key}
-                  onClick={() => setSortAndReset(opt.key)}
-                  className={`px-2.5 py-1 rounded-full text-[11px] font-medium transition-all ${
-                    sort === opt.key
-                      ? "bg-foreground text-background"
-                      : "bg-foreground/[0.04] text-foreground/70 hover:bg-foreground/[0.08]"
-                  }`}
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
       </section>
 
-      {/* Materials marquee — only on first page */}
-      {currentPage === 1 && (
-        <div className="border-b border-foreground/10 bg-ink text-cream overflow-hidden">
-          <div className="flex gap-6 sm:gap-10 py-2.5 whitespace-nowrap animate-[marquee_35s_linear_infinite] text-[11px] uppercase tracking-[0.3em]">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <span key={i} className="flex items-center gap-6 sm:gap-10 shrink-0">
-                {materialsTicker.map((m) => (
-                  <span key={m + i} className="flex items-center gap-6 sm:gap-10">
-                    <span className="text-pop">✦</span>
-                    <span>{m}</span>
-                  </span>
-                ))}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Grid */}
-      <section className="px-4 sm:px-8 lg:px-12 py-8 sm:py-12">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="flex items-end justify-between mb-6 sm:mb-8 flex-wrap gap-3">
-            <div>
-              <div className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
-                {category} · {sort.replace("-", " ")} · Page {currentPage} of {totalPages}
-              </div>
-              <h2 className="font-serif text-2xl sm:text-4xl mt-1 tracking-tight">
-                {filtered.length} {filtered.length === 1 ? "object" : "objects"}
-                <span className="text-foreground/30"> / showing {paginated.length}</span>
-              </h2>
-            </div>
-            <div className="hidden sm:flex items-center gap-2 text-[11px] text-muted-foreground">
-              <span className="size-1.5 rounded-full bg-mint" /> In stock
-              <span className="size-1.5 rounded-full bg-pop ml-3" /> Limited
-              <span className="size-1.5 rounded-full bg-brand ml-3" /> Pre-order
-            </div>
-          </div>
-          {filtered.length === 0 ? (
-            <div className="text-center py-20">
-              <p className="text-3xl font-serif italic text-muted-foreground">Nothing matches.</p>
-              <button
-                onClick={() => {
-                  setQueryAndReset("");
-                  setCategoryAndReset("All");
-                }}
-                className="mt-4 text-sm underline underline-offset-4"
-              >
-                Reset filters
-              </button>
-            </div>
-          ) : (
-            <>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
-                {paginated.map((p, idx) => (
-                  <ProductTiltCard key={p.id} className="group relative">
-                    <article className="relative bg-card rounded-xl border border-foreground/10 overflow-hidden h-full flex flex-col shadow-[0_1px_0_rgba(0,0,0,0.04)] hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.35)] transition-shadow">
-                      <button
-                        type="button"
-                        className={`relative aspect-square overflow-hidden block w-full text-left ${p.swatch}`}
-                        aria-label={`Quick view ${p.name}`}
-                      >
-                        <img
-                          src={p.image_url}
-                          alt={p.name}
-                          loading={idx < 5 ? "eager" : "lazy"}
-                          className="absolute inset-0 w-full h-full object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-700"
-                        />
-                        <span className="absolute top-2 left-2 text-[9px] font-bold tracking-widest uppercase bg-background/90 backdrop-blur px-1.5 py-0.5 rounded-full">
-                          {p.index}
-                        </span>
-                        <span
-                          role="button"
-                          aria-label="Save"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleSaved(p.id);
-                          }}
-                          className={`absolute bottom-2 right-2 size-7 grid place-items-center rounded-full bg-background/90 backdrop-blur text-xs transition-all hover:scale-110 ${
-                            saved.has(p.id)
-                              ? "opacity-100 text-pop"
-                              : "opacity-0 group-hover:opacity-100"
-                          }`}
-                        >
-                          {saved.has(p.id) ? "♥" : "♡"}
-                        </span>
-                        {/*<span className="absolute inset-x-2 bottom-2 sm:inset-x-3 sm:bottom-3 hidden sm:block translate-y-3 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                          <span className="block w-full text-center text-[10px] font-bold uppercase tracking-widest bg-background/95 backdrop-blur text-foreground py-1.5 rounded-full">
-                            Quick view →
-                          </span>
-                        </span>*/}
-                      </button>
-                      <div className="p-3 flex flex-col gap-1.5 flex-1">
-                        <div className="flex items-start justify-between gap-2">
-                          <h3 className="font-serif text-sm sm:text-base leading-tight line-clamp-1">
-                            {p.name}
-                          </h3>
-                          <span className="font-mono text-xs font-semibold tabular-nums shrink-0">
-                            {p.price}
-                          </span>
-                        </div>
-                        <div className="flex items-center justify-between text-[10px] text-muted-foreground">
-                          <span className="uppercase tracking-widest">{p.categoryLabel}</span>
-                          <span className="flex items-center gap-1">
-                            <span className="text-pop">★</span>
-                            <span className="font-medium text-foreground tabular-nums">
-                              {p.rating.toFixed(1)}
-                            </span>
-                          </span>
-                        </div>
-                        <Link
-  to={p.link}
-  data-cursor="Bag it"
-  target="_blank"
-  rel="noopener noreferrer sponsored"
-  className="mt-2 inline-flex items-center justify-center gap-1.5 bg-ink text-cream rounded-full py-1.5 text-[10px] font-bold uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-transform"
->
-  + Get Now · {p.price}
-</Link>
-                      </div>
-                    </article>
-                  </ProductTiltCard>
-                ))}
-              </div>
-              {totalPages > 1 && (
-                <div className="mt-10 flex items-center justify-center gap-2 flex-wrap">
-                  <button
-                    onClick={() => goToPage(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-foreground/15 px-4 py-2 text-[11px] font-bold uppercase tracking-widest hover:border-foreground/40 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-                  >
-                    ← Prev
-                  </button>
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => {
-                    const active = p === currentPage;
-                    return (
-                      <button
-                        key={p}
-                        onClick={() => goToPage(p)}
-                        aria-current={active ? "page" : undefined}
-                        className={`size-10 grid place-items-center rounded-full text-sm font-semibold tabular-nums transition-all ${
-                          active
-                            ? "bg-ink text-cream scale-110 shadow-[0_8px_20px_-8px_rgba(0,0,0,0.4)]"
-                            : "bg-foreground/[0.04] text-foreground/70 hover:bg-foreground/[0.08] hover:text-foreground"
-                        }`}
-                      >
-                        {p}
-                      </button>
-                    );
-                  })}
-                  <button
-                    onClick={() => goToPage(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-foreground/15 px-4 py-2 text-[11px] font-bold uppercase tracking-widest hover:border-foreground/40 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-                  >
-                    Next →
-                  </button>
-                </div>
-              )}
-            </>
-          )}
-        </div>
-      </section>
-
-      <section className="relative overflow-hidden bg-ink px-4 py-14 text-cream sm:px-8 sm:py-20 lg:px-12">
-        <div className="absolute -right-20 -top-20 size-80 rounded-full bg-pop/20 blur-3xl"></div>
-        <div className="absolute -bottom-24 -left-24 size-80 rounded-full bg-brand/30 blur-3xl"></div>
-
+      <section className="relative overflow-hidden bg-ink px-4 py-14 text-cream sm:px-8 sm:py-20 lg:px-12 border-t-2 border-pop">
         <div className="relative mx-auto grid max-w-[1400px] items-end gap-8 lg:grid-cols-[1.2fr_1fr]">
           <h2 className="font-serif text-4xl leading-[0.95] sm:text-6xl lg:text-7xl">
             Get the next drop
             <br />
-            <span className="italic text-pop">before the rest.</span>
+            <span className="not-italic font-bold text-pop">before the rest.</span>
           </h2>
 
           <form onSubmit={handleNewsletterSubmit} className="flex flex-col gap-3">
   <p className="max-w-md text-sm text-cream/70">
-    A monthly note from the studio: new objects, behind-the-scenes process,
-    and early access for subscribers only.
+    A monthly note on new arrivals, price drops, and early access for subscribers only.
   </p>
 
   <div className="flex flex-col gap-2 sm:flex-row">
@@ -888,14 +729,14 @@ const handleNewsletterSubmit = async (e: FormEvent<HTMLFormElement>) => {
       required
       value={email}
       onChange={(e) => setEmail(e.target.value)}
-      placeholder="you@studio.com"
-      className="flex-1 rounded-full border border-cream/20 bg-cream/10 px-4 py-3 text-sm text-cream placeholder:text-cream/40 focus:border-cream/60 focus:outline-none"
+      placeholder="you@example.com"
+      className="flex-1 rounded-sm border border-cream/20 bg-cream/10 px-4 py-3 text-sm text-cream placeholder:text-cream/40 focus:border-cream/60 focus:outline-none"
     />
 
     <button
       type="submit"
       disabled={loading}
-      className="rounded-full bg-pop px-5 py-3 text-xs font-bold uppercase tracking-widest text-pop-foreground transition-transform hover:scale-[1.03] disabled:opacity-50"
+      className="rounded-sm bg-pop px-5 py-3 text-xs font-bold uppercase tracking-widest text-pop-foreground transition-transform hover:scale-[1.03] disabled:opacity-50"
     >
       {loading ? "Submitting..." : "Notify me →"}
     </button>
@@ -923,7 +764,7 @@ const handleNewsletterSubmit = async (e: FormEvent<HTMLFormElement>) => {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-3xl bg-background rounded-2xl border border-foreground/10 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.5)] overflow-hidden grid sm:grid-cols-2 animate-scale-in"
+            className="relative w-full max-w-3xl bg-background rounded-sm border border-foreground/10 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.5)] overflow-hidden grid sm:grid-cols-2 animate-scale-in"
           >
             <button
               onClick={() => setQuickView(null)}
@@ -938,7 +779,7 @@ const handleNewsletterSubmit = async (e: FormEvent<HTMLFormElement>) => {
                 alt={quickView.name}
                 className="absolute inset-0 w-full h-full object-cover mix-blend-multiply"
               />
-              <span className="absolute top-3 left-3 text-[10px] font-bold tracking-widest uppercase bg-background/90 backdrop-blur px-2 py-1 rounded-full">
+              <span className="absolute top-3 left-3 text-[10px] font-bold tracking-widest uppercase bg-background/90 backdrop-blur px-2 py-1 rounded-sm">
                 {quickView.index} · {quickView.categoryLabel}
               </span>
             </div>
@@ -964,7 +805,7 @@ const handleNewsletterSubmit = async (e: FormEvent<HTMLFormElement>) => {
                 </div>
               </div>
               <p className="text-sm text-foreground/70 leading-relaxed">{quickView.desc}</p>
-              <div className="rounded-lg bg-foreground/[0.04] px-3 py-2 text-[11px] uppercase tracking-widest text-muted-foreground">
+              <div className="rounded-sm bg-foreground/[0.04] px-3 py-2 text-[11px] uppercase tracking-widest text-muted-foreground">
                 Materials ·{" "}
                 <span className="text-foreground normal-case tracking-normal">
                   {quickView.materials}
@@ -973,7 +814,7 @@ const handleNewsletterSubmit = async (e: FormEvent<HTMLFormElement>) => {
               <div className="mt-auto flex gap-2">
                 <a
                   href=""
-                  className="flex-1 text-center bg-ink text-cream rounded-full py-3 text-xs font-bold uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-transform"
+                  className="flex-1 text-center bg-ink text-cream rounded-sm py-3 text-xs font-bold uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-transform"
                 >
                   Shop now
                 </a>

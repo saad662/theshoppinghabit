@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
-
+import { Logo } from "@/components/Logo";
 
 function NewsletterForm() {
   const [email, setEmail] = useState("");
@@ -52,38 +52,22 @@ function NewsletterForm() {
 
   if (status === "success") {
     return (
-      <div
-        className="border-t border-foreground pt-6 animate-fade-up"
-        role="status"
-        aria-live="polite"
-      >
-        <p className="text-xs font-medium uppercase tracking-[0.25em] text-muted-foreground mb-3">
-          Subscribed
-        </p>
-        <p className="text-2xl font-medium tracking-tight mb-4">
-          Thank you — check your inbox.
-        </p>
+      <div className="rounded-sm border-2 border-pop bg-pop/10 p-4" role="status" aria-live="polite">
+        <p className="text-sm font-semibold text-cream mb-2">Subscribed — check your inbox.</p>
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="text-xs font-medium uppercase tracking-widest underline underline-offset-4 hover:opacity-60 transition-opacity"
+          className="text-[11px] font-bold uppercase tracking-widest text-pop underline underline-offset-2"
         >
-          Subscribe another email
+          Use a different email
         </button>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="border-t border-foreground pt-6">
-      <label
-        htmlFor="newsletter-email"
-        className="text-xs font-medium uppercase tracking-[0.25em] text-muted-foreground block mb-3"
-      >
-        Email Address
-      </label>
-
-      <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 border-b border-foreground/30 focus-within:border-brand transition-colors">
+    <form onSubmit={handleSubmit} noValidate>
+      <div className="flex flex-col sm:flex-row gap-2">
         <input
           id="newsletter-email"
           type="email"
@@ -99,80 +83,103 @@ function NewsletterForm() {
             }
           }}
           placeholder="you@example.com"
-          className="min-w-0 flex-1 bg-transparent py-3 text-lg outline-none placeholder:text-muted-foreground/60"
+          aria-label="Email address"
+          className="min-w-0 flex-1 bg-cream/10 border-2 border-cream/15 rounded-sm px-4 py-2.5 text-sm text-cream placeholder:text-cream/40 outline-none focus:border-pop transition-colors"
         />
-
         <button
           type="submit"
           disabled={status === "loading"}
-          className="shrink-0 w-full sm:w-auto rounded-full bg-brand text-brand-foreground text-xs font-bold uppercase tracking-widest px-5 py-2.5 mb-3 sm:mb-0 hover:scale-[1.04] transition-transform disabled:opacity-50"
+          className="shrink-0 rounded-sm bg-pop text-pop-foreground text-xs font-bold uppercase tracking-widest px-5 py-2.5 hover:brightness-110 transition-[filter] disabled:opacity-50"
         >
-          {status === "loading" ? "Submitting..." : "Subscribe →"}
+          {status === "loading" ? "Joining…" : "Subscribe"}
         </button>
       </div>
 
-      {status === "error" ? (
-        <p className="text-xs text-destructive mt-3" role="alert">
+      {status === "error" && (
+        <p className="text-xs text-destructive mt-2" role="alert">
           {error}
-        </p>
-      ) : (
-        <p className="text-xs text-muted-foreground mt-3">
-          Join our newsletter to receive the latest deals and exclusive offers.{" "}
-          <Link
-            to="/privacy-policy"
-            className="font-semibold text-blue-600 hover:text-blue-700 underline underline-offset-2"
-          >
-            Privacy Policy
-          </Link>
         </p>
       )}
     </form>
   );
 }
+
+const exploreLinks = [
+  { to: "/", label: "Home" },
+  { to: "/blog", label: "Blog" },
+  { to: "/products", label: "Shop" },
+] as const;
+
+const companyLinks = [
+  { to: "/about", label: "About Us" },
+  { to: "/contact", label: "Contact" },
+] as const;
+
+const legalLinks = [
+  { to: "/privacy-policy", label: "Privacy Policy" },
+  { to: "/terms", label: "Terms" },
+] as const;
+
+function FooterColumn({ title, links }: { title: string; links: ReadonlyArray<{ to: string; label: string }> }) {
+  return (
+    <div>
+      <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-cream/40 mb-4">{title}</p>
+      <ul className="space-y-2.5">
+        {links.map((l) => (
+          <li key={l.to}>
+            <Link to={l.to} className="text-sm text-cream/80 hover:text-cream transition-colors">
+              {l.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export function Footer({ showNewsletter = false }: { showNewsletter?: boolean }) {
   return (
-    <footer id="studio" className="border-t border-border">
-      {showNewsletter && (
-        <section className="py-14 sm:py-20 px-4 sm:px-6 lg:px-8 border-b border-border">
-          <div className="max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12 items-end">
-            <div className="lg:col-span-6">
-              <h2 className="text-[2rem] sm:text-4xl md:text-5xl font-semibold tracking-tight text-balance max-w-[18ch]">
-                Smarter buying decisions, in your inbox.
-              </h2>
-            </div>
-            <div className="lg:col-span-6 lg:col-start-7">
-              <NewsletterForm />
-            </div>
-          </div>
-        </section>
-      )}
-      <div className="py-10 sm:py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-screen-xl mx-auto flex flex-col items-center gap-6 sm:gap-8 text-center md:flex-row md:justify-between md:text-left">
-          <div className="space-y-2">
-            <p className="text-sm sm:text-base font-medium text-[#000000] max-w-xs mx-auto md:mx-0">
+    <footer id="studio" className="bg-ink text-cream">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12">
+          <div className="lg:col-span-4">
+            <Logo dark />
+            <p className="text-sm text-cream/60 mt-4 max-w-xs">
               You may save with our links, and we may earn a small commission.
             </p>
-            <p className="text-[10px] sm:text-xs font-medium text-muted-foreground uppercase tracking-widest">
-              © 2026 TheShoppingHabit. All rights reserved.
-            </p>
           </div>
-          <div className="flex flex-wrap justify-center items-center gap-x-5 gap-y-3 sm:gap-x-8">
-            <Link to="/about" className="text-xs font-medium uppercase tracking-widest">
-              About Us
-            </Link>
-            <Link to="/stores" className="text-xs font-medium uppercase tracking-widest">
-              Stores
-            </Link>
-            <Link to="/privacy-policy" className="text-xs font-medium uppercase tracking-widest">
-              Privacy Policy
-            </Link>
-            <Link to="/terms" className="text-xs font-medium uppercase tracking-widest">
-              Terms
-            </Link>
-            <Link to="/contact" className="text-xs font-medium uppercase tracking-widest">
-              Contact
-            </Link>
+
+          <div className="lg:col-span-2">
+            <FooterColumn title="Explore" links={exploreLinks} />
           </div>
+          <div className="lg:col-span-2">
+            <FooterColumn title="Company" links={companyLinks} />
+          </div>
+          <div className="lg:col-span-2">
+            <FooterColumn title="Legal" links={legalLinks} />
+          </div>
+
+          {showNewsletter && (
+            <div className="lg:col-span-12 lg:order-first pb-10 sm:pb-12 border-b-2 border-cream/10 mb-2 sm:mb-4">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:items-end">
+                <div className="lg:col-span-7">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-pop mb-3">Newsletter</p>
+                  <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-balance">
+                    Smarter buying decisions, in your inbox.
+                  </h2>
+                </div>
+                <div className="lg:col-span-5">
+                  <NewsletterForm />
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="mt-12 sm:mt-14 pt-6 border-t border-cream/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-[10px] font-medium text-cream/40 uppercase tracking-widest">
+            © 2026 TheShoppingHabit. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

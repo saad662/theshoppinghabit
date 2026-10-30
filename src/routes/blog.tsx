@@ -200,7 +200,7 @@ if (loading) {
       onMouseMove={(e) => setCoords({ x: e.clientX, y: e.clientY })}
     >
       {/* Nav */}
-      <nav className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-foreground/5 py-2 sm:py-3 px-4 sm:px-6 lg:px-8 flex justify-between items-center gap-3 overflow-visible">
+      <nav className="sticky top-0 z-40 bg-background border-b-2 border-brand py-3 sm:py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center gap-3 overflow-visible">
         <Link to="/" className="flex items-center shrink-0">
           <Logo />
         </Link>
@@ -208,35 +208,27 @@ if (loading) {
           <Link
             to="/"
             activeOptions={{ exact: true }}
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
+            className="text-xs font-bold uppercase tracking-widest transition-colors relative pb-1"
+            activeProps={{ className: "text-foreground after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-[2px] after:bg-brand" }}
+            inactiveProps={{ className: "text-foreground/50 hover:text-foreground" }}
           >
             Home
           </Link>
           <Link
             to="/blog"
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
+            className="text-xs font-bold uppercase tracking-widest transition-colors relative pb-1"
+            activeProps={{ className: "text-foreground after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-[2px] after:bg-brand" }}
+            inactiveProps={{ className: "text-foreground/50 hover:text-foreground" }}
           >
             Blogs
           </Link>
           <Link
             to="/products"
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
+            className="text-xs font-bold uppercase tracking-widest transition-colors relative pb-1"
+            activeProps={{ className: "text-foreground after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-[2px] after:bg-brand" }}
+            inactiveProps={{ className: "text-foreground/50 hover:text-foreground" }}
           >
             Shop
-          </Link>
-          <Link
-            to="/stores"
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
-          >
-            Stores
           </Link>
         </div>
         <div className="flex items-center gap-2">
@@ -246,9 +238,7 @@ if (loading) {
       </nav>
 
       {/* Header / filter rail */}
-      <section className="relative px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-6 overflow-hidden">
-        <div aria-hidden className="absolute -top-32 -right-32 size-[420px] bg-brand/20 blur-3xl rounded-full pointer-events-none" />
-        <div aria-hidden className="absolute -bottom-24 -left-24 size-[320px] bg-mint/40 blur-3xl rounded-full pointer-events-none" />
+      <section className="relative px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-6 border-b-2 border-foreground/10">
         <div className="relative max-w-screen-xl mx-auto">
           <p className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.25em] text-brand mb-4 flex items-center gap-2">
             <span className="size-1.5 rounded-full bg-brand animate-pulse" />
@@ -258,7 +248,7 @@ if (loading) {
             <h1 className="lg:col-span-7 text-[2.4rem] sm:text-5xl md:text-7xl font-semibold tracking-tighter leading-[0.95] text-balance">
               Discover What's Actually
               <br />
-              <span className="italic font-light bg-gradient-to-r from-brand via-pop to-ink bg-clip-text text-transparent">
+              <span className="not-italic font-bold underline decoration-pop decoration-[3px] underline-offset-4">
                 worth it.
               </span>
             </h1>
@@ -277,7 +267,7 @@ if (loading) {
                     navigate({ search: (prev) => ({ ...prev, page: 1 }) });
                   }}
                   placeholder="Search"
-                  className="w-full bg-foreground/[0.04] border border-foreground/10 rounded-full pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand/40 transition"
+                  className="w-full bg-foreground/[0.04] border border-foreground/10 rounded-sm pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand/40 transition"
                 />
                 {query && (
                   <button
@@ -307,7 +297,7 @@ if (loading) {
                   key={f}
                   onClick={() => setFilter(f)}
                   data-cursor="Filter"
-                  className={`group inline-flex items-center gap-2 rounded-full px-4 sm:px-5 py-2.5 sm:py-3 text-[11px] sm:text-xs font-bold uppercase tracking-widest transition-all duration-300 ${
+                  className={`group inline-flex items-center gap-2 rounded-sm px-4 sm:px-5 py-2.5 sm:py-3 text-[11px] sm:text-xs font-bold uppercase tracking-widest transition-all duration-300 ${
                     selected
                       ? "bg-ink text-cream scale-[1.04] shadow-[0_12px_30px_-12px_rgba(0,0,0,0.45)]"
                       : "bg-background border border-foreground/10 text-foreground/70 hover:text-ink hover:border-foreground/40 hover:-translate-y-0.5"
@@ -335,7 +325,7 @@ if (loading) {
               data-cursor="Read"
               onMouseEnter={() => setHoverId(String(hero.id))}
               onMouseLeave={() => setHoverId(null)}
-              className="lg:col-span-8 group relative overflow-hidden rounded-3xl bg-ink text-cream"
+              className="lg:col-span-8 group relative overflow-hidden rounded-sm bg-ink text-cream"
             >
               <div className="relative aspect-[16/10] md:aspect-[16/8] overflow-hidden">
                 <img
@@ -345,7 +335,7 @@ if (loading) {
                   loading="eager"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/50 to-transparent" />
-                <span className="absolute top-5 left-5 inline-flex items-center gap-2 bg-pop text-pop-foreground rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-widest">
+                <span className="absolute top-5 left-5 inline-flex items-center gap-2 bg-pop text-pop-foreground rounded-sm px-3 py-1 text-[10px] font-bold uppercase tracking-widest">
                   ★ 
                 </span>
               </div>
@@ -364,7 +354,7 @@ if (loading) {
                 <div className="flex items-center justify-between gap-4">
                   <span className="text-xs text-cream/70">
                     By <span className="text-cream font-medium">TheShoppingHabit</span></span>
-                  <span className="inline-flex items-center gap-2 bg-cream text-ink rounded-full px-4 py-2 text-[11px] font-bold uppercase tracking-widest group-hover:bg-pop group-hover:text-pop-foreground transition-colors">
+                  <span className="inline-flex items-center gap-2 bg-cream text-ink rounded-sm px-4 py-2 text-[11px] font-bold uppercase tracking-widest group-hover:bg-pop group-hover:text-pop-foreground transition-colors">
                     Read story →
                   </span>
                 </div>
@@ -380,9 +370,9 @@ if (loading) {
                   data-cursor="Read"
                   onMouseEnter={() => setHoverId(String(p.id))}
                   onMouseLeave={() => setHoverId(null)}
-                  className="group flex gap-4 p-3 rounded-2xl border border-foreground/10 hover:border-foreground/30 hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-22px_rgba(0,0,0,0.35)] transition-all bg-background"
+                  className="group flex gap-4 p-3 rounded-sm border border-foreground/10 hover:border-foreground/30 hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-22px_rgba(0,0,0,0.35)] transition-all bg-background"
                 >
-                  <div className="relative size-24 sm:size-28 shrink-0 overflow-hidden rounded-xl">
+                  <div className="relative size-24 sm:size-28 shrink-0 overflow-hidden rounded-sm">
                     <img src={p.image_url} alt={p.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" />
                     <span className={`absolute top-1.5 left-1.5 size-6 grid place-items-center rounded-full text-[10px] font-mono `}>
                       {String(i + 2).padStart(2, "0")}
@@ -442,11 +432,11 @@ if (loading) {
             </div>
 
             {pageBlogs.length === 0 ? (
-              <div className="text-center py-20 border border-dashed border-foreground/15 rounded-3xl">
+              <div className="text-center py-20 border border-dashed border-foreground/15 rounded-sm">
                 <p className="text-sm text-muted-foreground mb-4">No stories match those filters.</p>
                 <button
                   onClick={() => { setQuery(""); navigate({ search: (prev) => ({ ...prev, page: 1 }) }); }}
-                  className="inline-flex items-center gap-2 bg-ink text-cream rounded-full px-4 py-2 text-[11px] font-bold uppercase tracking-widest hover:scale-[1.03] transition-transform"
+                  className="inline-flex items-center gap-2 bg-ink text-cream rounded-sm px-4 py-2 text-[11px] font-bold uppercase tracking-widest hover:scale-[1.03] transition-transform"
                 >
                   Reset filters
                 </button>
@@ -460,7 +450,7 @@ if (loading) {
                       key={p.id}
                       onMouseEnter={() => setHoverId(String(p.id))}
                       onMouseLeave={() => setHoverId(null)}
-                      className="group relative overflow-hidden rounded-2xl border border-foreground/10 bg-background hover:border-foreground/30 hover:-translate-y-1 hover:shadow-[0_24px_50px_-30px_rgba(0,0,0,0.4)] transition-all"
+                      className="group relative overflow-hidden rounded-sm border border-foreground/10 bg-background hover:border-foreground/30 hover:-translate-y-1 hover:shadow-[0_24px_50px_-30px_rgba(0,0,0,0.4)] transition-all"
                     >
                       <Link to="/blog/$slug" params={{ slug: p.slug }} data-cursor="Read" className="block">
                         <div className="relative aspect-[5/3] overflow-hidden">
@@ -470,7 +460,7 @@ if (loading) {
                             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
                             loading="lazy"
                           />
-                          <span className={`absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest `}>
+                          <span className={`absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-sm px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest `}>
                             Story
                           </span>
                         </div>
@@ -519,7 +509,7 @@ if (loading) {
           {/* Sidebar */}
           <aside className="lg:col-span-4 space-y-8 lg:sticky lg:top-24 self-start">
             {sidebarBlogs.length > 0 && (
-            <div className="rounded-3xl bg-ink text-cream p-6 sm:p-7">
+            <div className="rounded-sm bg-ink text-cream p-6 sm:p-7">
               <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-pop mb-3">Editor's index</p>
               <h3 className="text-xl font-semibold tracking-tight mb-5">Most loved this month</h3>
               <ol className="space-y-4">
@@ -544,10 +534,8 @@ if (loading) {
             </div>
             )}
 
-            <div className="rounded-3xl bg-gradient-to-br from-brand/15 via-mint/30 to-pop/20 p-6 sm:p-7 border border-foreground/10">
-              {/*<p className="text-[10px] font-bold uppercase tracking-[0.25em] text-brand mb-3">Dispatch</p>*/}
+            <div className="rounded-sm bg-brand-soft p-6 sm:p-7 border-2 border-brand/20">
               <h3 className="text-xl font-semibold tracking-tight mb-2">A weekly letter, no noise.</h3>
-              {/*<p className="text-sm text-foreground/70 mb-4">One essay, two field notes, three objects we found.</p>*/}
               <form
                 onSubmit={(e) => { e.preventDefault(); }}
                 className="flex gap-2"
@@ -555,17 +543,17 @@ if (loading) {
                 <input
                   type="email"
                   required
-                  placeholder="you@studio.com"
-                  className="flex-1 bg-background/80 border border-foreground/15 rounded-full px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40"
+                  placeholder="you@example.com"
+                  className="flex-1 bg-background border border-foreground/15 rounded-sm px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40"
                 />
-                <button className="inline-flex items-center gap-2 bg-ink text-cream rounded-full px-4 py-2.5 text-[11px] font-bold uppercase tracking-widest hover:scale-[1.03] transition-transform">
+                <button className="inline-flex items-center gap-2 bg-ink text-cream rounded-sm px-4 py-2.5 text-[11px] font-bold uppercase tracking-widest hover:scale-[1.03] transition-transform">
                   Join
                 </button>
               </form>
             </div>
 
             {saved.length > 0 && (
-              <div className="rounded-3xl border border-foreground/10 p-5">
+              <div className="rounded-sm border border-foreground/10 p-5">
                 <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-brand mb-2">Reading list</p>
                 <p className="text-sm">
                   <span className="font-mono text-lg text-ink mr-1">{saved.length}</span>
@@ -599,11 +587,11 @@ if (loading) {
                   params={{ slug: p.slug }}
                   onMouseEnter={() => setHoverId(String(p.id))}
                   onMouseLeave={() => setHoverId(null)}
-                  className="group block rounded-2xl overflow-hidden border border-foreground/10 hover:border-foreground/30 transition-all hover:-translate-y-1"
+                  className="group block rounded-sm overflow-hidden border border-foreground/10 hover:border-foreground/30 transition-all hover:-translate-y-1"
                 >
                   <div className="relative aspect-[4/3] overflow-hidden">
                     <img src={p.image_url} alt={p.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                    <span className={`absolute bottom-3 left-3 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest `}>Published</span>
+                    <span className={`absolute bottom-3 left-3 rounded-sm px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest `}>Published</span>
                   </div>
                   <div className="p-4">
                     <h3 className="text-sm font-semibold leading-snug line-clamp-2 mb-2 group-hover:text-brand transition-colors">{p.title}</h3>
@@ -623,7 +611,7 @@ if (loading) {
               type="button"
               onClick={() => goToPage(currentPage - 1)}
               disabled={currentPage === 1}
-              className="inline-flex items-center gap-1.5 rounded-full border border-foreground/15 px-4 sm:px-5 py-2.5 sm:py-3 text-[11px] sm:text-xs font-bold uppercase tracking-widest hover:border-foreground/40 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+              className="inline-flex items-center gap-1.5 rounded-sm border border-foreground/15 px-4 sm:px-5 py-2.5 sm:py-3 text-[11px] sm:text-xs font-bold uppercase tracking-widest hover:border-foreground/40 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             >
               ← Previous
             </button>
@@ -634,7 +622,7 @@ if (loading) {
               type="button"
               onClick={() => goToPage(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className="inline-flex items-center gap-1.5 rounded-full bg-ink text-cream px-4 sm:px-5 py-2.5 sm:py-3 text-[11px] sm:text-xs font-bold uppercase tracking-widest hover:scale-[1.03] transition-transform disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
+              className="inline-flex items-center gap-1.5 rounded-sm bg-ink text-cream px-4 sm:px-5 py-2.5 sm:py-3 text-[11px] sm:text-xs font-bold uppercase tracking-widest hover:scale-[1.03] transition-transform disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
             >
               Next →
             </button>
@@ -645,7 +633,7 @@ if (loading) {
       {/* Floating cursor preview */}
       <div
         aria-hidden
-        className="hidden lg:block pointer-events-none fixed top-0 left-0 z-40 w-[260px] aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl outline-1 outline-black/10 transition-[opacity,transform] duration-300 ease-out"
+        className="hidden lg:block pointer-events-none fixed top-0 left-0 z-40 w-[260px] aspect-[4/5] rounded-sm overflow-hidden shadow-2xl outline-1 outline-black/10 transition-[opacity,transform] duration-300 ease-out"
         style={{
           opacity: previewed ? 1 : 0,
           transform: `translate(${coords.x + 24}px, ${coords.y - 180}px) scale(${previewed ? 1 : 0.9})`,

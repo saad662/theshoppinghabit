@@ -106,7 +106,7 @@ export const Route = createFileRoute("/blog_/$slug")({
       <div>
         <p className="text-[11px] font-mono uppercase tracking-[0.3em] text-brand mb-3">404 · Story</p>
         <h1 className="text-3xl font-semibold tracking-tight mb-4">This story has been pulled from the press.</h1>
-        <Link to="/blog" className="inline-flex items-center gap-2 bg-ink text-cream rounded-full px-4 py-2 text-[11px] font-bold uppercase tracking-widest">
+        <Link to="/blog" className="inline-flex items-center gap-2 bg-ink text-cream rounded-sm px-4 py-2 text-[11px] font-bold uppercase tracking-widest">
           ← Back to journal
         </Link>
       </div>
@@ -117,7 +117,7 @@ export const Route = createFileRoute("/blog_/$slug")({
       <meta name="robots" content="noindex, nofollow" />
       <div>
         <p className="text-sm text-muted-foreground mb-4">{error.message}</p>
-        <button onClick={reset} className="bg-ink text-cream rounded-full px-4 py-2 text-xs font-bold uppercase tracking-widest">Retry</button>
+        <button onClick={reset} className="bg-ink text-cream rounded-sm px-4 py-2 text-xs font-bold uppercase tracking-widest">Retry</button>
       </div>
     </div>
   ),
@@ -161,7 +161,7 @@ function PostPage() {
       </div>
 
       {/* Nav */}
-      <nav className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-foreground/5 py-2 sm:py-3 px-4 sm:px-6 lg:px-8 flex justify-between items-center gap-3 overflow-visible">
+      <nav className="sticky top-0 z-40 bg-background border-b-2 border-brand py-3 sm:py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center gap-3 overflow-visible">
         <Link to="/" className="flex items-center shrink-0">
           <Logo />
         </Link>
@@ -169,35 +169,27 @@ function PostPage() {
           <Link
             to="/"
             activeOptions={{ exact: true }}
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
+            className="text-xs font-bold uppercase tracking-widest transition-colors relative pb-1"
+            activeProps={{ className: "text-foreground after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-[2px] after:bg-brand" }}
+            inactiveProps={{ className: "text-foreground/50 hover:text-foreground" }}
           >
             Home
           </Link>
           <Link
             to="/blog"
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
+            className="text-xs font-bold uppercase tracking-widest transition-colors relative pb-1"
+            activeProps={{ className: "text-foreground after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-[2px] after:bg-brand" }}
+            inactiveProps={{ className: "text-foreground/50 hover:text-foreground" }}
           >
             Blogs
           </Link>
           <Link
             to="/products"
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
+            className="text-xs font-bold uppercase tracking-widest transition-colors relative pb-1"
+            activeProps={{ className: "text-foreground after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-[2px] after:bg-brand" }}
+            inactiveProps={{ className: "text-foreground/50 hover:text-foreground" }}
           >
             Shop
-          </Link>
-          <Link
-            to="/stores"
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
-          >
-            Stores
           </Link>
         </div>
         <div className="flex items-center gap-2">
@@ -252,7 +244,7 @@ function PostPage() {
     [&_ul]:pl-6
     [&_ol]:list-decimal
     [&_ol]:pl-6
-    [&_img]:rounded-xl
+    [&_img]:rounded-sm
     [&_img]:my-6
     [&_a]:text-blue-600
     [&_a]:underline
@@ -296,7 +288,7 @@ function PostPage() {
     [&_ul]:pl-6
     [&_ol]:list-decimal
     [&_ol]:pl-6
-    [&_img]:rounded-xl
+    [&_img]:rounded-sm
     [&_img]:my-6
     [&_a]:text-blue-600
     [&_a]:underline
@@ -311,7 +303,7 @@ function PostPage() {
         {/* Closing + author card */}
       <section className="px-4 sm:px-6 lg:px-8 py-10 sm:py-12 bg-foreground/[0.02] border-y border-foreground/5">
           <div className="max-w-3xl mx-auto">
-          <div className="rounded-2xl border border-foreground/10 p-5 sm:p-6 flex items-center gap-4 bg-background">
+          <div className="rounded-sm border border-foreground/10 p-5 sm:p-6 flex items-center gap-4 bg-background">
             <div className="size-12 rounded-full bg-gradient-to-br from-brand to-pop grid place-items-center text-cream text-sm font-mono shrink-0">
                 BB
               </div>
@@ -320,7 +312,7 @@ function PostPage() {
               <p className="font-semibold text-sm sm:text-base tracking-tight">TheShoppingHabit</p>
               <p className="text-xs text-muted-foreground">Admin · TheShoppingHabit</p>
               </div>
-            <button className="hidden sm:inline-flex items-center gap-2 bg-foreground/[0.04] hover:bg-foreground/10 rounded-full px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-widest transition-colors">
+            <button className="hidden sm:inline-flex items-center gap-2 bg-foreground/[0.04] hover:bg-foreground/10 rounded-sm px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-widest transition-colors">
                 Follow
               </button>
             </div>
@@ -334,8 +326,8 @@ function PostPage() {
           <section className="px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
             <div className="max-w-screen-xl mx-auto">
               <div className="flex items-end justify-between mb-8 gap-4">
-                <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">More from <span className="italic font-light">the journal</span></h2>
-                <Link to="/blog" className="hidden sm:inline-flex items-center gap-2 bg-foreground/[0.04] hover:bg-foreground/10 rounded-full px-4 py-2 text-[11px] font-bold uppercase tracking-widest transition-colors">
+                <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">More from <span className="not-italic font-bold">the journal</span></h2>
+                <Link to="/blog" className="hidden sm:inline-flex items-center gap-2 bg-foreground/[0.04] hover:bg-foreground/10 rounded-sm px-4 py-2 text-[11px] font-bold uppercase tracking-widest transition-colors">
                   All stories →
                 </Link>
               </div>
@@ -345,11 +337,11 @@ function PostPage() {
                     key={p.id}
                     to="/blog/$slug"
                     params={{ slug: p.slug }}
-                    className="group block rounded-2xl overflow-hidden border border-foreground/10 hover:border-foreground/30 transition-all hover:-translate-y-1"
+                    className="group block rounded-sm overflow-hidden border border-foreground/10 hover:border-foreground/30 transition-all hover:-translate-y-1"
                   >
                     <div className="relative aspect-[5/4] overflow-hidden">
                       <img src={p.image_url} alt={p.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                      <span className={`absolute bottom-3 left-3 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest `}>Story</span>
+                      <span className={`absolute bottom-3 left-3 rounded-sm px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest `}>Story</span>
                     </div>
 
 
@@ -374,7 +366,6 @@ function PostPage() {
 /* ---------- HERO COVER (parallax tilt + scroll parallax) ---------- */
 function HeroCover({ post }: { post: Blog }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
@@ -389,53 +380,23 @@ function HeroCover({ post }: { post: Blog }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const r = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - r.left) / r.width - 0.5) * 12;
-    const y = ((e.clientY - r.top) / r.height - 0.5) * -12;
-    setTilt({ x, y });
-  };
-
   return (
     <section
       ref={ref}
-      onMouseMove={onMove}
-      onMouseLeave={() => setTilt({ x: 0, y: 0 })}
-      className="relative h-[58vh] sm:h-[72vh] lg:h-[85vh] overflow-hidden bg-ink"
-      style={{ perspective: "1200px" }}
+      className="relative h-[50vh] sm:h-[60vh] lg:h-[68vh] overflow-hidden bg-ink border-b-2 border-brand"
     >
       <div
         className="absolute inset-0 transition-transform duration-200 ease-out will-change-transform"
-        style={{
-          transform: `translateY(${scrollY * 0.25}px) rotateX(${tilt.y}deg) rotateY(${tilt.x}deg) scale(1.08)`,
-          transformStyle: "preserve-3d",
-        }}
+        style={{ transform: `translateY(${scrollY * 0.2}px) scale(1.05)` }}
       >
         <img src={post.image_url} alt={post.title} className="absolute inset-0 w-full h-full object-cover" />
-        {/* color wash */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-ink/10 to-ink/70" />
-        <div className="absolute inset-0 mix-blend-overlay opacity-60 bg-[radial-gradient(circle_at_70%_30%,#ff5b2e55,transparent_55%),radial-gradient(circle_at_20%_80%,#39d4a355,transparent_55%)]" />
       </div>
 
-      {/* floating chips */}
-      <div className="absolute top-6 left-6 sm:top-8 sm:left-8 flex flex-wrap gap-2 z-10">
-        <span className="inline-flex items-center gap-2 bg-cream/90 text-ink backdrop-blur rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest">
+      <div className="absolute top-6 left-6 sm:top-8 sm:left-8 z-10">
+        <span className="inline-flex items-center gap-2 bg-cream text-ink rounded-sm px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest">
           ★ Featured story
         </span>
-        <span className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest `}>
-          Publish
-        </span>
-      </div>
-      <div className="absolute bottom-6 right-6 sm:bottom-8 sm:right-8 z-10">
-        <span className="inline-flex items-center gap-2 bg-ink/70 text-cream backdrop-blur rounded-full px-3 py-1.5 text-[10px] font-mono uppercase tracking-[0.25em]">
-          ⊕ Move cursor 
-        </span>
-      </div>
-
-      {/* scroll indicator */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-cream/80">
-        <span className="text-[9px] font-mono uppercase tracking-[0.3em]">Scroll</span>
-        <span className="block h-8 w-px bg-cream/40 animate-pulse" />
       </div>
     </section>
   );
@@ -470,7 +431,7 @@ function ProductBlock({
       </h2>
 
       {(product.image || product.image_url) && (
-        <div className="relative aspect-[16/10] rounded-2xl overflow-hidden mb-5">
+        <div className="relative aspect-[16/10] rounded-sm overflow-hidden mb-5">
           <img
             src={product.image_url || product.image || ""}
             alt={product.name || "Product"}
@@ -479,7 +440,7 @@ function ProductBlock({
         </div>
       )}
 
-      <div className="rounded-2xl border border-foreground/10 p-5 bg-background">
+      <div className="rounded-sm border border-foreground/10 p-5 bg-background">
         <p className="text-sm text-foreground/85 leading-relaxed">
           {product.description || "No description available."}
         </p>
@@ -498,7 +459,7 @@ function ProductBlock({
               href={product.link}
               target="_blank"
               rel="noopener noreferrer sponsored"
-              className="inline-flex items-center justify-center rounded-full px-5 py-3 bg-ink text-cream text-[11px] font-bold uppercase tracking-widest"
+              className="inline-flex items-center justify-center rounded-sm px-5 py-3 bg-ink text-cream text-[11px] font-bold uppercase tracking-widest"
             >
               View Product →
             </a>

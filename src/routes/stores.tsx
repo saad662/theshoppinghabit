@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MobileMenu } from "@/components/MobileMenu";
 import { Footer } from "@/components/Footer";
+import { Logo } from "@/components/Logo";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { absoluteUrl, breadcrumbLd, DEFAULT_OG_IMAGE } from "@/lib/seo";
@@ -67,13 +68,11 @@ function StoresPage() {
   return (
     <main className="bg-background min-h-screen">
 
-      <nav className="sticky top-0 z-40 bg-background border-b py-4 px-6 flex justify-between">
+      <nav className="sticky top-0 z-40 bg-background border-b-2 border-brand py-4 px-6 flex justify-between items-center">
 
-        <Link to="/" className="font-semibold">
-          TheShoppingHabit
-        </Link>
+        <Link to="/" className="flex items-center shrink-0"><Logo /></Link>
 
-        <div className="flex gap-8">
+        <div className="flex gap-8 text-xs font-bold uppercase tracking-widest">
 
           <Link to="/">Home</Link>
 
@@ -133,7 +132,7 @@ function StoresPage() {
             className="mb-14"
           >
 
-            <div className="border rounded-xl overflow-hidden">
+            <div className="border rounded-sm overflow-hidden">
 
               <div className="bg-gray-50 border-b px-6 py-4">
 

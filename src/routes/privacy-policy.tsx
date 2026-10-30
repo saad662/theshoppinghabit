@@ -77,18 +77,18 @@ function PrivacyPolicyPage() {
         <div className="flex gap-8 sm:gap-10 whitespace-nowrap animate-[ticker_30s_linear_infinite] text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.25em]">
           {Array.from({ length: 3 }).map((_, k) => (
             <span key={k} className="flex gap-8 sm:gap-10 items-center shrink-0">
-              <span>Studio crafted · made in small batches</span>
+              <span>Verified Reviews</span>
               <span className="text-pop">/</span>
-              <span>Trending · Arc Task Lamp · C-Series Input</span>
+              <span>Exclusive Deals</span>
               <span className="text-pop">/</span>
-              <span>Lifetime repair on all apparatus</span>
+              <span>Trusted Buying Guides</span>
               <span className="text-pop">/</span>
             </span>
           ))}
         </div>
       </div>
 
-      <nav className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-foreground/5 py-2 sm:py-3 px-4 sm:px-6 lg:px-8 flex justify-between items-center gap-3 overflow-visible">
+      <nav className="sticky top-0 z-40 bg-background border-b-2 border-brand py-3 sm:py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center gap-3 overflow-visible">
         <Link to="/" className="flex items-center shrink-0">
           <Logo />
         </Link>
@@ -96,35 +96,27 @@ function PrivacyPolicyPage() {
           <Link
             to="/"
             activeOptions={{ exact: true }}
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
+            className="text-xs font-bold uppercase tracking-widest transition-colors relative pb-1"
+            activeProps={{ className: "text-foreground after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-[2px] after:bg-brand" }}
+            inactiveProps={{ className: "text-foreground/50 hover:text-foreground" }}
           >
             Home
           </Link>
           <Link
             to="/blog"
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
+            className="text-xs font-bold uppercase tracking-widest transition-colors relative pb-1"
+            activeProps={{ className: "text-foreground after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-[2px] after:bg-brand" }}
+            inactiveProps={{ className: "text-foreground/50 hover:text-foreground" }}
           >
             Blogs
           </Link>
           <Link
             to="/products"
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
+            className="text-xs font-bold uppercase tracking-widest transition-colors relative pb-1"
+            activeProps={{ className: "text-foreground after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-[2px] after:bg-brand" }}
+            inactiveProps={{ className: "text-foreground/50 hover:text-foreground" }}
           >
             Shop
-          </Link>
-          <Link
-            to="/stores"
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
-          >
-            Stores
           </Link>
         </div>
         <div className="flex items-center gap-2">
@@ -167,7 +159,7 @@ function PrivacyPolicyPage() {
               {howWeUse.map((item, i) => (
                 <div
                   key={item}
-                  className="rounded-2xl border border-foreground/10 bg-foreground/[0.02] p-5 sm:p-6 hover:border-foreground/30 hover:-translate-y-0.5 transition-all"
+                  className="rounded-sm border border-foreground/10 bg-foreground/[0.02] p-5 sm:p-6 hover:border-foreground/30 hover:-translate-y-0.5 transition-all"
                 >
                   <span className="font-mono text-pop text-xs tabular-nums">{String(i + 1).padStart(2, "0")}</span>
                   <p className="mt-3 text-sm sm:text-base font-semibold tracking-tight">{item}</p>
@@ -176,7 +168,7 @@ function PrivacyPolicyPage() {
             </div>
           </div>
           <div className="lg:col-span-5">
-            <div className="rounded-3xl bg-ink text-cream p-6 sm:p-7 h-full flex flex-col justify-center">
+            <div className="rounded-sm bg-ink text-cream p-6 sm:p-7 h-full flex flex-col justify-center">
               <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-pop mb-3">Our Promise</p>
               <p className="text-lg sm:text-xl font-medium tracking-tight leading-snug">
                 We do not sell or rent your personal information to third parties.

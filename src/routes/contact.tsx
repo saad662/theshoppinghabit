@@ -88,18 +88,18 @@ function ContactPage() {
         <div className="flex gap-8 sm:gap-10 whitespace-nowrap animate-[ticker_30s_linear_infinite] text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.25em]">
           {Array.from({ length: 3 }).map((_, k) => (
             <span key={k} className="flex gap-8 sm:gap-10 items-center shrink-0">
-              <span>Studio crafted · made in small batches</span>
+              <span>Verified Reviews</span>
               <span className="text-pop">/</span>
-              <span>Trending · Arc Task Lamp · C-Series Input</span>
+              <span>Exclusive Deals</span>
               <span className="text-pop">/</span>
-              <span>Lifetime repair on all apparatus</span>
+              <span>Trusted Buying Guides</span>
               <span className="text-pop">/</span>
             </span>
           ))}
         </div>
       </div>
 
-      <nav className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-foreground/5 py-2 sm:py-3 px-4 sm:px-6 lg:px-8 flex justify-between items-center gap-3 overflow-visible">
+      <nav className="sticky top-0 z-40 bg-background border-b-2 border-brand py-3 sm:py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center gap-3 overflow-visible">
         <Link to="/" className="flex items-center shrink-0">
           <Logo />
         </Link>
@@ -107,35 +107,27 @@ function ContactPage() {
           <Link
             to="/"
             activeOptions={{ exact: true }}
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
+            className="text-xs font-bold uppercase tracking-widest transition-colors relative pb-1"
+            activeProps={{ className: "text-foreground after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-[2px] after:bg-brand" }}
+            inactiveProps={{ className: "text-foreground/50 hover:text-foreground" }}
           >
             Home
           </Link>
           <Link
             to="/blog"
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
+            className="text-xs font-bold uppercase tracking-widest transition-colors relative pb-1"
+            activeProps={{ className: "text-foreground after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-[2px] after:bg-brand" }}
+            inactiveProps={{ className: "text-foreground/50 hover:text-foreground" }}
           >
             Blogs
           </Link>
           <Link
             to="/products"
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
+            className="text-xs font-bold uppercase tracking-widest transition-colors relative pb-1"
+            activeProps={{ className: "text-foreground after:absolute after:left-0 after:right-0 after:-bottom-1 after:h-[2px] after:bg-brand" }}
+            inactiveProps={{ className: "text-foreground/50 hover:text-foreground" }}
           >
             Shop
-          </Link>
-          <Link
-            to="/stores"
-            className="text-base font-medium transition-colors"
-            activeProps={{ className: "text-foreground" }}
-            inactiveProps={{ className: "text-foreground/70 hover:text-foreground" }}
-          >
-            Stores
           </Link>
         </div>
         <div className="flex items-center gap-2">
@@ -167,7 +159,7 @@ function ContactPage() {
       {/* Contact info */}
       <section className="px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20">
         <div className="max-w-screen-xl mx-auto">
-          <div className="rounded-3xl bg-ink text-cream p-6 sm:p-10 md:p-12">
+          <div className="rounded-sm bg-ink text-cream p-6 sm:p-10 md:p-12">
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-10 sm:mb-12">
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-pop mb-3">
@@ -180,7 +172,7 @@ function ContactPage() {
               </div>
               <a
                 href="mailto:info@buyersbulletin.com"
-                className="inline-flex items-center gap-2 bg-cream text-ink rounded-full px-5 py-3 text-[11px] sm:text-xs font-bold uppercase tracking-widest hover:scale-[1.03] transition-transform shrink-0 self-start md:self-auto"
+                className="inline-flex items-center gap-2 bg-cream text-ink rounded-sm px-5 py-3 text-[11px] sm:text-xs font-bold uppercase tracking-widest hover:scale-[1.03] transition-transform shrink-0 self-start md:self-auto"
               >
                 Email us <ArrowUpRight className="size-3.5" />
               </a>
@@ -190,7 +182,7 @@ function ContactPage() {
               {contactDetails.map(({ icon: Icon, label, value, href }) => (
                 <div
                   key={label}
-                  className="rounded-2xl bg-cream/5 border border-cream/10 p-5 sm:p-6 hover:bg-cream/10 transition-colors"
+                  className="rounded-sm bg-cream/5 border border-cream/10 p-5 sm:p-6 hover:bg-cream/10 transition-colors"
                 >
                   <span className="flex size-10 items-center justify-center rounded-full bg-cream/10 mb-4">
                     <Icon className="size-4 text-pop" />
@@ -226,7 +218,7 @@ function ContactPage() {
               <Link
                 key={item.title}
                 to={item.to}
-                className="group rounded-2xl border border-foreground/10 bg-foreground/[0.02] p-5 sm:p-6 hover:border-foreground/30 hover:-translate-y-0.5 transition-all flex flex-col"
+                className="group rounded-sm border border-foreground/10 bg-foreground/[0.02] p-5 sm:p-6 hover:border-foreground/30 hover:-translate-y-0.5 transition-all flex flex-col"
               >
                 <h3 className="text-base sm:text-lg font-semibold tracking-tight mb-2">
                   {item.title}
