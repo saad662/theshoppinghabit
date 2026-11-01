@@ -448,15 +448,6 @@ function LandingPage() {
         <MobileMenu />
       </nav>
 
-      {/* Breadcrumb */}
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 pb-2 flex items-center gap-2 text-xs text-muted-foreground">
-        <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
-        <span>→</span>
-        <Link to="/stores" className="hover:text-foreground transition-colors">Stores</Link>
-        <span>→</span>
-        <span className="text-foreground font-medium">{storeName}</span>
-      </div>
-
       {/* Main: deal grid + sidebar */}
       <section className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 lg:gap-10">
